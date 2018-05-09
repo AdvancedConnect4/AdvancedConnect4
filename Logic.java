@@ -10,6 +10,11 @@ public class Logic
     public int yellowCoins = 100;
     public int redCoins = 100;
     
+    public int getRedCoins()
+    {
+        return yellowCoins;
+    }
+    
     public int getYellowCoins()
     {
         return yellowCoins;
