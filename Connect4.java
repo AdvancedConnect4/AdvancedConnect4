@@ -9,6 +9,11 @@ public class ConnectFour
     public static int yellowCoins = 100;
     public static int redCoins = 100;
     
+    public int getYellowCoins()
+    {
+        return yellowCoins;
+    }
+    
 public static String[][] createPattern()
 {
    String[][] f = new String[7][15];
@@ -232,6 +237,11 @@ public static void main (String[] args)
        loop = false;
   }
   }
+}
+
+public int getRedCoins()
+{
+    return redCoins;
 }
 
 }
