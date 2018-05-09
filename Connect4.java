@@ -14,40 +14,40 @@ public class ConnectFour
         return yellowCoins;
     }
     
-public static String[][] createPattern()
+public static String[][] createGrid()
 {
-   String[][] f = new String[7][15];
-  for (int i =0;i<f.length;i++)
+   String[][] grid = new String[7][15];
+  for (int i =0;i<grid.length;i++)
   {
-     for (int j =0;j<f[i].length;j++)
+     for (int x =0; x<grid[i].length;x++)
     {
-      if (j% 2 == 0)
+      if (x% 2 == 0)
       {
-          f[i][j] ="|";
+          grid[i][x] ="|";
       }
       else
       {
-          f[i][j] = " ";
+          grid[i][x] = " ";
       }
       if (i==6) 
       {
-          f[i][j]= "-";
+          grid[i][x]= "-";
       }
     }
   }
-  return f;
+  return grid;
 }
 
 
 
 
-public static void printPattern(String[][] f)
+public static void printGrid(String[][] grid)
 {
-  for (int i =0;i<f.length;i++)
+  for (int i =0;i< grid.length;i++)
   {
-    for (int j=0;j<f[i].length;j++)
+    for (int x=0; x< grid[i].length; x++)
     {
-      System.out.print(f[i][j]);
+      System.out.print(grid[i][x]);
     }
     System.out.println();
   }
@@ -93,7 +93,7 @@ public static int getNextPlayer()
 
 }
 
-public static void dropRedPattern(String[][] f)
+public static void dropRedPattern(String[][] grid)
 {
   System.out.println("Drop a red disk at column (0–6): ");
   Scanner scan = new Scanner (System.in);
@@ -102,9 +102,9 @@ public static void dropRedPattern(String[][] f)
   
   for (int i =5;i>=0;i--)
   {
-    if (f[i][c] == " ")
+    if (grid[i][c] == " ")
     {
-      f[i][c] = "R";
+      grid[i][c] = "R";
       break;
     }
   }
@@ -113,81 +113,81 @@ public static void dropRedPattern(String[][] f)
 
 
 
-public static void dropYellowPattern(String[][] f)
+public static void dropYellowPattern(String[][] grid)
 {
   System.out.println("Drop a yellow disk at column (0–6): ");
   Scanner scan = new Scanner (System.in);
   int c = 2*scan.nextInt()+1;
   for (int i =5;i>=0;i--)
   {
-    if (f[i][c] == " ")
+    if (grid[i][c] == " ")
     {
-      f[i][c] = "Y";
+      grid[i][c] = "Y";
       break;
     }
   }
 
 }
 
-public static String checkWinner(String[][] f)
+public static String checkWinner(String[][] grid)
 {
   for (int i =0;i<6;i++)
   {
-    for (int j=0;j<7;j+=2)
+    for (int x=0; x<7; x+=2)
     {
-      if ((f[i][j+1] != " ")
-      && (f[i][j+3] != " ")
-      && (f[i][j+5] != " ")
-      && (f[i][j+7] != " ")
-      && ((f[i][j+1] == f[i][j+3])
-      && (f[i][j+3] == f[i][j+5])
-      && (f[i][j+5] == f[i][j+7])))
-      return f[i][j+1]; 
+      if ((grid[i][x+1] != " ")
+      && (grid[i][x+3] != " ")
+      && (grid[i][x+5] != " ")
+      && (grid[i][x+7] != " ")
+      && ((grid[i][x+1] == grid[i][x+3])
+      && (grid[i][x+3] == grid[i][x+5])
+      && (grid[i][x+5] == grid[i][x+7])))
+      return grid[i][x+1]; 
     }
   }
 
   for (int i=1;i<15;i+=2)
   {   
-      for (int j =0;j<3;j++)
+      for (int x =0;x<3;x++)
       {
-          if((f[j][i] != " ")
-          && (f[j+1][i] != " ")
-          && (f[j+2][i] != " ")
-          && (f[j+3][i] != " ")
-          && ((f[j][i] == f[j+1][i])
-          && (f[j+1][i] == f[j+2][i])
-          && (f[j+2][i] == f[j+3][i])))
-            return f[j][i]; 
+          if((grid[x][i] != " ")
+          && (grid[x+1][i] != " ")
+          && (grid[x+2][i] != " ")
+          && (grid[x+3][i] != " ")
+          && ((grid[x][i] == grid[x+1][i])
+          && (grid[x+1][i] == grid[x+2][i])
+          && (grid[x+2][i] == grid[x+3][i])))
+            return grid[x][i]; 
       } 
   }
  
   for (int i=0;i<3;i++)
   {
-      for (int j=1;j<9;j+=2)
+      for (int x=1;x<9;x+=2)
       {
-          if((f[i][j] != " ")
-          && (f[i+1][j+2] != " ")
-          && (f[i+2][j+4] != " ")
-          && (f[i+3][j+6] != " ")
-          && ((f[i][j] == f[i+1][j+2])
-          && (f[i+1][j+2] == f[i+2][j+4])
-          && (f[i+2][j+4] == f[i+3][j+6])))
-            return f[i][j]; 
+          if((grid[i][x] != " ")
+          && (grid[i+1][x+2] != " ")
+          && (grid[i+2][x+4] != " ")
+          && (grid[i+3][x+6] != " ")
+          && ((grid[i][x] == grid[i+1][x+2])
+          && (grid[i+1][x+2] == grid[i+2][x+4])
+          && (grid[i+2][x+4] == grid[i+3][x+6])))
+            return grid[i][x]; 
     } 
   }
  
   for (int i=0;i<3;i++)
   {
-    for (int j=7;j<15;j+=2)
+    for (int x=7;x<15;x+=2)
     {
-          if((f[i][j] != " ")
-          && (f[i+1][j-2] != " ")
-          && (f[i+2][j-4] != " ")
-          && (f[i+3][j-6] != " ")
-          && ((f[i][j] == f[i+1][j-2])
-          && (f[i+1][j-2] == f[i+2][j-4])
-          && (f[i+2][j-4] == f[i+3][j-6])))
-            return f[i][j]; 
+          if((grid[i][x] != " ")
+          && (grid[i+1][x-2] != " ")
+          && (grid[i+2][x-4] != " ")
+          && (grid[i+3][x-6] != " ")
+          && ((grid[i][x] == grid[i+1][x-2])
+          && (grid[i+1][x-2] == grid[i+2][x-4])
+          && (grid[i+2][x-4] == grid[i+3][x-6])))
+            return grid[i][x]; 
     } 
   }
   return null;
@@ -197,21 +197,21 @@ public static String checkWinner(String[][] f)
 
 public static void main (String[] args)
 {
-  String[][] f = createPattern();
+  String[][] grid = createGrid();
   boolean loop = true;
-  printPattern(f);
+  printGrid(grid);
   while(loop)
   {
       int playerTurn = getNextPlayer();
       if(playerTurn == red)
       {
-          dropRedPattern(f);
+          dropRedPattern(grid);
           System.out.println( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
           System.out.println( "Red has " + Integer.valueOf( redCoins ) + " coins left");
       } 
       else if (playerTurn == yellow) 
       {
-         dropYellowPattern(f);
+         dropYellowPattern(grid);
          System.out.println( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
          System.out.println( "Red has " + Integer.valueOf( redCoins ) + " coins left");
      }
@@ -221,16 +221,16 @@ public static void main (String[] args)
          System.out.println( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
          System.out.println( "Red has " + Integer.valueOf( redCoins ) + " coins left");
      }
-     printPattern(f);
+     printGrid(grid);
      
-     if (checkWinner(f) != null)
+     if (checkWinner(grid) != null)
      {
-        if (checkWinner(f) == "R")
+        if (checkWinner(grid) == "R")
         {
             System.out.println("The red player won.");
             
         }           
-        else if (checkWinner(f)== "Y")
+        else if (checkWinner(grid)== "Y")
         {
             System.out.println("The yellow player won.");
         }
