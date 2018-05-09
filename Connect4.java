@@ -5,9 +5,10 @@ public class ConnectFour
 {
     public static int yellow = 0;
     public static int red = 1;
-    public static int tie = 1;
+    public static int tie = 2;
     public static int yellowCoins = 100;
     public static int redCoins = 100;
+    
 public static String[][] createPattern()
 {
    String[][] f = new String[7][15];
@@ -53,11 +54,24 @@ public static int getNextPlayer()
     System.out.println("How much to bid(red): ");
     Scanner scan = new Scanner(System.in);
     int playerRed = scan.nextInt();
+    if (playerRed > redCoins)
+    {
+        System.out.println( "You don't have that many coins. This bid is invalid and "
+            + "your turn is skipped" );
+        playerRed = 0;
+    }
     redCoins = redCoins - playerRed;
     
     System.out.println("How much to bid(yellow): ");
     int playerYellow = scan.nextInt();
+    if (playerYellow > yellowCoins)
+    {
+        System.out.println( "You don't have that many coins. This bid is invalid and "
+                        + "your turn is skipped" );
+        playerYellow = 0;
+    }
     yellowCoins = yellowCoins - playerYellow;
+    
     if(playerYellow > playerRed)
     {
         return yellow;
@@ -183,23 +197,24 @@ public static void main (String[] args)
   printPattern(f);
   while(loop)
   {
-     if (getNextPlayer() == yellow) 
-     {
+      int playerTurn = getNextPlayer();
+      if(playerTurn == red)
+      {
+          dropRedPattern(f);
+          System.out.println( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
+          System.out.println( "Red has " + Integer.valueOf( redCoins ) + " coins left");
+      } 
+      else if (playerTurn == yellow) 
+      {
          dropYellowPattern(f);
-         System.out.print( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
-         System.out.print( "Red has " + Integer.valueOf( redCoins ) + " coins left");
-     }
-     else if(getNextPlayer() == tie)
-     {
-         System.out.print("There was a tie");
-         System.out.print( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
-         System.out.print( "Red has " + Integer.valueOf( redCoins ) + " coins left");
+         System.out.println( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
+         System.out.println( "Red has " + Integer.valueOf( redCoins ) + " coins left");
      }
      else
      {
-         dropRedPattern(f);
-         System.out.print( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
-         System.out.print( "Red has " + Integer.valueOf( redCoins ) + " coins left");
+         System.out.println("There was a tie");
+         System.out.println( "Yellow has " + Integer.valueOf( yellowCoins ) + " coins left");
+         System.out.println( "Red has " + Integer.valueOf( redCoins ) + " coins left");
      }
      printPattern(f);
      
@@ -212,7 +227,7 @@ public static void main (String[] args)
         }           
         else if (checkWinner(f)== "Y")
         {
-            System.out.println("The yello player won.");
+            System.out.println("The yellow player won.");
         }
        loop = false;
   }
