@@ -10,11 +10,7 @@ public class Logic
     public int yellowCoins = 100;
     public int redCoins = 100;
     
-    public int getYellowCoins()
-    {
-        return yellowCoins;
-    }
-    
+
 public String[][] createGrid()
 {
    String[][] grid = new String[7][15];
@@ -198,6 +194,22 @@ public String checkWinner(String[][] grid)
   }
   return null;
 }
+
+public int setRedCoins(int subtract)
+{
+    return red;
+    
+}
+public int getRedCoins()
+{
+    return redCoins;
+}
+
+public int getYellowCoins()
+{
+    return yellowCoins;
+}
+
 
 
 
