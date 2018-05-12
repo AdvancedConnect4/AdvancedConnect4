@@ -10,11 +10,6 @@ public class Logic
     public int yellowCoins = 100;
     public int redCoins = 100;
     
-    public int getRedCoins()
-    {
-        return yellowCoins;
-    }
-    
     public int getYellowCoins()
     {
         return yellowCoins;
@@ -23,21 +18,21 @@ public class Logic
 public String[][] createGrid()
 {
    String[][] grid = new String[7][15];
-  for (int i =0;i<grid.length;i++)
+  for (int row =0;row<grid.length; row++)
   {
-     for (int x =0; x<grid[i].length;x++)
+     for (int col =0; col <grid[row].length; col++)
     {
-      if (x% 2 == 0)
+      if (col % 2 == 0)
       {
-          grid[i][x] ="|";
+          grid[row][col] ="|";
       }
       else
       {
-          grid[i][x] = " ";
+          grid[row][col] = " ";
       }
-      if (i==6) 
+      if (row ==6) 
       {
-          grid[i][x]= "-";
+          grid[row][col]= "-";
       }
     }
   }
@@ -47,11 +42,11 @@ public String[][] createGrid()
 
 public void printGrid(String[][] grid)
 {
-  for (int i =0;i< grid.length;i++)
-  {
-    for (int x=0; x< grid[i].length; x++)
+    for (int row =0;row<grid.length; row++)
     {
-      System.out.print(grid[i][x]);
+       for (int col =0; col <grid[row].length; col++)
+      {
+      System.out.print(grid[row][col]);
     }
     System.out.println();
   }
@@ -61,15 +56,18 @@ public void printGrid(String[][] grid)
 public  int getNextPlayer()
 {
     System.out.println("How much to bid(red): ");
+    
     Scanner scan = new Scanner(System.in);
-    int playerRed = scan.nextInt();
-    if (playerRed > redCoins)
+    
+    int redPlayer = scan.nextInt();
+    
+    if (redPlayer > redCoins)
     {
         System.out.println( "You don't have that many coins. This bid is invalid and "
             + "your turn is skipped" );
-        playerRed = 0;
+        redPlayer = 0;
     }
-    redCoins = redCoins - playerRed;
+    redCoins = redCoins - redPlayer;
     
     System.out.println("How much to bid(yellow): ");
     int playerYellow = scan.nextInt();
@@ -81,11 +79,11 @@ public  int getNextPlayer()
     }
     yellowCoins = yellowCoins - playerYellow;
     
-    if(playerYellow > playerRed)
+    if(playerYellow > redPlayer)
     {
         return yellow;
     }
-    else if(playerYellow == playerRed)
+    else if(playerYellow == redPlayer)
     {
         return tie;
     }
@@ -99,16 +97,17 @@ public  int getNextPlayer()
 
 public  void dropRedPattern(String[][] grid)
 {
-  System.out.println("Drop a red disk at column (0–6): ");
+  System.out.println("Drop a red token in column (0 -6): ");
+  
   Scanner scan = new Scanner (System.in);
 
-  int c = 2*scan.nextInt()+1;
+  int changeToOdd = 2*scan.nextInt()+1;
   
-  for (int i =5;i>=0;i--)
+  for (int row =5; row>=0; row--)
   {
-    if (grid[i][c] == " ")
+    if (grid[row][changeToOdd] == " ")
     {
-      grid[i][c] = "R";
+      grid[row][changeToOdd] = "R";
       break;
     }
   }
@@ -120,13 +119,16 @@ public  void dropRedPattern(String[][] grid)
 public void dropYellowPattern(String[][] grid)
 {
   System.out.println("Drop a yellow disk at column (0–6): ");
+  
   Scanner scan = new Scanner (System.in);
-  int c = 2*scan.nextInt()+1;
-  for (int i =5;i>=0;i--)
+  
+  int changeToOdd = 2*scan.nextInt()+1;
+  
+  for (int row =5; row>=0; row--)
   {
-    if (grid[i][c] == " ")
+    if (grid[row][changeToOdd] == " ")
     {
-      grid[i][c] = "Y";
+      grid[row][changeToOdd] = "Y";
       break;
     }
   }
@@ -135,63 +137,63 @@ public void dropYellowPattern(String[][] grid)
 
 public String checkWinner(String[][] grid)
 {
-  for (int i =0;i<6;i++)
+  for (int row =0;row<6;row++)
   {
-    for (int x=0; x<7; x+=2)
+    for (int col=0; col<7; col+=2)
     {
-      if ((grid[i][x+1] != " ")
-      && (grid[i][x+3] != " ")
-      && (grid[i][x+5] != " ")
-      && (grid[i][x+7] != " ")
-      && ((grid[i][x+1] == grid[i][x+3])
-      && (grid[i][x+3] == grid[i][x+5])
-      && (grid[i][x+5] == grid[i][x+7])))
-      return grid[i][x+1]; 
+      if ((grid[row][col+1] != " ")
+      && (grid[row][col+3] != " ")
+      && (grid[row][col+5] != " ")
+      && (grid[row][col+7] != " ")
+      && ((grid[row][col+1] == grid[row][col+3])
+      && (grid[row][col+3] == grid[row][col+5])
+      && (grid[row][col+5] == grid[row][col+7])))
+      return grid[row][col+1]; 
     }
   }
 
-  for (int i=1;i<15;i+=2)
+  for (int row=1;row<15;row+=2)
   {   
-      for (int x =0;x<3;x++)
+      for (int col =0;col<3;col++)
       {
-          if((grid[x][i] != " ")
-          && (grid[x+1][i] != " ")
-          && (grid[x+2][i] != " ")
-          && (grid[x+3][i] != " ")
-          && ((grid[x][i] == grid[x+1][i])
-          && (grid[x+1][i] == grid[x+2][i])
-          && (grid[x+2][i] == grid[x+3][i])))
-            return grid[x][i]; 
+          if((grid[col][row] != " ")
+          && (grid[col+1][row] != " ")
+          && (grid[col+2][row] != " ")
+          && (grid[col+3][row] != " ")
+          && ((grid[col][row] == grid[col+1][row])
+          && (grid[col+1][row] == grid[col+2][row])
+          && (grid[col+2][row] == grid[col+3][row])))
+            return grid[col][row]; 
       } 
   }
  
-  for (int i=0;i<3;i++)
+  for (int row=0; row<3; row++)
   {
-      for (int x=1;x<9;x+=2)
+      for (int col=1;col<9;col+=2)
       {
-          if((grid[i][x] != " ")
-          && (grid[i+1][x+2] != " ")
-          && (grid[i+2][x+4] != " ")
-          && (grid[i+3][x+6] != " ")
-          && ((grid[i][x] == grid[i+1][x+2])
-          && (grid[i+1][x+2] == grid[i+2][x+4])
-          && (grid[i+2][x+4] == grid[i+3][x+6])))
-            return grid[i][x]; 
+          if((grid[row][col] != " ")
+          && (grid[row+1][col+2] != " ")
+          && (grid[row+2][col+4] != " ")
+          && (grid[row+3][col+6] != " ")
+          && ((grid[row][col] == grid[row+1][col+2])
+          && (grid[row+1][col+2] == grid[row+2][col+4])
+          && (grid[row+2][col+4] == grid[row+3][col+6])))
+            return grid[row][col]; 
     } 
   }
  
-  for (int i=0;i<3;i++)
+  for (int row=0; row<3; row++)
   {
-    for (int x=7;x<15;x+=2)
+    for (int col =7; col<15; col+=2)
     {
-          if((grid[i][x] != " ")
-          && (grid[i+1][x-2] != " ")
-          && (grid[i+2][x-4] != " ")
-          && (grid[i+3][x-6] != " ")
-          && ((grid[i][x] == grid[i+1][x-2])
-          && (grid[i+1][x-2] == grid[i+2][x-4])
-          && (grid[i+2][x-4] == grid[i+3][x-6])))
-            return grid[i][x]; 
+          if((grid[row][col] != " ")
+          && (grid[row+1][col-2] != " ")
+          && (grid[row+2][col-4] != " ")
+          && (grid[row+3][col-6] != " ")
+          && ((grid[row][col] == grid[row+1][col-2])
+          && (grid[row+1][col-2] == grid[row+2][col-4])
+          && (grid[row+2][col-4] == grid[row+3][col-6])))
+            return grid[row][col]; 
     } 
   }
   return null;
