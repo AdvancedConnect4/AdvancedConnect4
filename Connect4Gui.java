@@ -5,12 +5,12 @@ import java.awt.event.*;
 public class Connect4Gui {
 
     // Images required for displaying the GUI
-    private static Icon availableSlot = new ImageIcon("images/availableSlot.png");
-    private static Icon notYetAvailableSlot = new ImageIcon("images/notYetAvailableSlot.png"); 
-    private static Icon redSlot = new ImageIcon("images/redSlot.png");
-    private static Icon redSlotWinning = new ImageIcon("images/redWinningSlot.png");
-    private static Icon yellowSlot = new ImageIcon("images/yellowSlot.png");
-    private static Icon yellowSlotWinning = new ImageIcon("images/yellowWinningSlot.png");
+    private static Icon availableSlot = new ImageIcon("availableSlot.png");
+    private static Icon notYetAvailableSlot = new ImageIcon("notYetAvailableSlot.png"); 
+    private static Icon redSlot = new ImageIcon("redSlot.png");
+    private static Icon redSlotWinning = new ImageIcon("redWinningSlot.png");
+    private static Icon yellowSlot = new ImageIcon("yellowSlot.png");
+    private static Icon yellowSlotWinning = new ImageIcon("yellowWinningSlot.png");
 
     // Number of rows.
     private static final int NUM_ROWS = 6; 
