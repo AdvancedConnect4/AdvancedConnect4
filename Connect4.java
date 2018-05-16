@@ -7,7 +7,7 @@ public class ConnectFour
     public static int tie = 2;
     public static int yellowCoins = 100;
     public static int redCoins = 100;
-    
+        
 static Logic logic = new Logic();
 public static void main (String[] args)
 {
@@ -20,7 +20,7 @@ public static void main (String[] args)
       
       if(playerTurn == red)
       {
-          logic.dropRedPattern(grid);
+          logic.dropRedPatternAI(grid);
           System.out.println( "Yellow has " + Integer.valueOf(logic.getYellowCoins()) + " coins left");
           System.out.println( "Red has " + Integer.valueOf(logic.getRedCoins()) + " coins left");
       } 
