@@ -187,6 +187,51 @@ public class Logic
         }
 
     }
+    
+     public String checkTwoInaRow(String [][] grid)
+    {
+        for ( int row = 0; row < 6; row++ )
+        {
+            for ( int col = 0; col < 7; col += 2 )
+            {
+                if ((grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " ")
+                    && ( ( grid[row][col + 1] == grid[row][col + 3] )))
+                    return grid[row][col + 5];
+            }
+        }
+
+        for ( int row = 1; row < 15; row += 2 )
+        {
+            for ( int col = 0; col < 3; col++ )
+            {
+                if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
+                    && ( ( grid[col][row] == grid[col + 1][row] )))
+                    return grid[col + 2][row];
+            }
+        }
+
+        for ( int row = 0; row < 3; row++ )
+        {
+            for ( int col = 1; col < 9; col += 2 )
+            {
+                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " ")
+                    && ( ( grid[row][col] == grid[row + 1][col + 2] )))
+                    return grid[row + 2][col + 4];
+            }
+        }
+
+        for ( int row = 0; row < 3; row++ )
+        {
+            for ( int col = 7; col < 15; col += 2 )
+            {
+                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
+                    && ( ( grid[row][col] == grid[row + 1][col - 2] )))
+                    return grid[row + 2][col - 4];
+            }
+        }
+        return null;
+    }
+    
     public String checkThreeInaRow(String [][] grid)
     {
         for ( int row = 0; row < 6; row++ )
