@@ -5,23 +5,22 @@ import java.util.Scanner;
 
 public class Logic
 {
+    ComputerPlayer compPlayer = new ComputerPlayer();
     public int yellow = 0;
-
     public int red = 1;
-
+    private int humanMovesPlayed;
     public int tie = 2;
-
+    private int[] humanPlayerBids = new int[43];
     public int yellowCoins = 100;
     public int redCoins = 100;
     private int nextRedBid;
     private int nextRedMove;
     
     ComputerPlayer comp = new ComputerPlayer();
-
-
-    public void setNextRedBid( int nextBid )
+    
+    public int getMovesPlayed()
     {
-        nextRedBid = nextBid;
+        return humanMovesPlayed;
     }
 
     public void setNextRedMove( int nextMove )
@@ -44,6 +43,10 @@ public class Logic
         return yellowCoins;
     }
 
+    public int[] getHumanPlayerBids()
+    {
+        return humanPlayerBids;
+    }
 
     public String[][] createGrid()
     {
@@ -91,7 +94,7 @@ public class Logic
 //        
 //         int redPlayer = scan.nextInt();
 
-       int computerRed = comp.bidTokens();
+       int computerRed = compPlayer.bidAmount();
        
         
         if (computerRed > redCoins )
@@ -101,7 +104,6 @@ public class Logic
         redCoins = getRedCoins() - computerRed;
 
         
-       
         System.out.println( "How much to bid(yellow): " );
         Scanner scan = new Scanner( System.in );
         int playerYellow = scan.nextInt();
@@ -112,7 +114,7 @@ public class Logic
             playerYellow = 0;
         }
         yellowCoins = yellowCoins - playerYellow;
-
+        humanPlayerBids[humanMovesPlayed] = playerYellow;
         if ( playerYellow > computerRed )
         {
             return yellow;
@@ -188,101 +190,102 @@ public class Logic
 
     }
     
-     public String checkTwoInaRow(String [][] grid)
-    {
-        for ( int row = 0; row < 6; row++ )
-        {
-            for ( int col = 0; col < 7; col += 2 )
-            {
-                if ((grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " ")
-                    && ( ( grid[row][col + 1] == grid[row][col + 3] )))
-                    return grid[row][col + 5];
-            }
-        }
+    public String checkTwoInaRow(String [][] grid)
+   {
+       for ( int row = 0; row < 6; row++ )
+       {
+           for ( int col = 0; col < 7; col += 2 )
+           {
+               if ((grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " ")
+                   && ( ( grid[row][col + 1] == grid[row][col + 3] )))
+                   return grid[row][col + 5];
+           }
+       }
 
-        for ( int row = 1; row < 15; row += 2 )
-        {
-            for ( int col = 0; col < 3; col++ )
-            {
-                if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
-                    && ( ( grid[col][row] == grid[col + 1][row] )))
-                    return grid[col + 2][row];
-            }
-        }
+       for ( int row = 1; row < 15; row += 2 )
+       {
+           for ( int col = 0; col < 3; col++ )
+           {
+               if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
+                   && ( ( grid[col][row] == grid[col + 1][row] )))
+                   return grid[col + 2][row];
+           }
+       }
 
-        for ( int row = 0; row < 3; row++ )
-        {
-            for ( int col = 1; col < 9; col += 2 )
-            {
-                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " ")
-                    && ( ( grid[row][col] == grid[row + 1][col + 2] )))
-                    return grid[row + 2][col + 4];
-            }
-        }
+       for ( int row = 0; row < 3; row++ )
+       {
+           for ( int col = 1; col < 9; col += 2 )
+           {
+               if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " ")
+                   && ( ( grid[row][col] == grid[row + 1][col + 2] )))
+                   return grid[row + 2][col + 4];
+           }
+       }
 
-        for ( int row = 0; row < 3; row++ )
-        {
-            for ( int col = 7; col < 15; col += 2 )
-            {
-                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
-                    && ( ( grid[row][col] == grid[row + 1][col - 2] )))
-                    return grid[row + 2][col - 4];
-            }
-        }
-        return null;
-    }
-    
-    public String checkThreeInaRow(String [][] grid)
-    {
-        for ( int row = 0; row < 6; row++ )
-        {
-            for ( int col = 0; col < 7; col += 2 )
-            {
-                if ( ( grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " " )
-                    && ( grid[row][col + 5] != " " )
-                    && ( ( grid[row][col + 1] == grid[row][col + 3] )
-                        && ( grid[row][col + 3] == grid[row][col + 5])))
-                    return grid[row][col + 7];
-            }
-        }
+       for ( int row = 0; row < 3; row++ )
+       {
+           for ( int col = 7; col < 15; col += 2 )
+           {
+               if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
+                   && ( ( grid[row][col] == grid[row + 1][col - 2] )))
+                   return grid[row + 2][col - 4];
+           }
+       }
+       return null;
+   }
+   
+   public String checkThreeInaRow(String [][] grid)
+   {
+       for ( int row = 0; row < 6; row++ )
+       {
+           for ( int col = 0; col < 7; col += 2 )
+           {
+               if ( ( grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " " )
+                   && ( grid[row][col + 5] != " " )
+                   && ( ( grid[row][col + 1] == grid[row][col + 3] )
+                       && ( grid[row][col + 3] == grid[row][col + 5])))
+                   return grid[row][col + 7];
+           }
+       }
 
-        for ( int row = 1; row < 15; row += 2 )
-        {
-            for ( int col = 0; col < 3; col++ )
-            {
-                if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
-                    && ( grid[col + 2][row] != " " )
-                    && ( ( grid[col][row] == grid[col + 1][row] )
-                        && ( grid[col + 1][row] == grid[col + 2][row] )))
-                    return grid[col + 3][row];
-            }
-        }
+       for ( int row = 1; row < 15; row += 2 )
+       {
+           for ( int col = 0; col < 3; col++ )
+           {
+               if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
+                   && ( grid[col + 2][row] != " " )
+                   && ( ( grid[col][row] == grid[col + 1][row] )
+                       && ( grid[col + 1][row] == grid[col + 2][row] )))
+                   return grid[col + 3][row];
+           }
+       }
 
-        for ( int row = 0; row < 3; row++ )
-        {
-            for ( int col = 1; col < 9; col += 2 )
-            {
-                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " " )
-                    && ( grid[row + 2][col + 4] != " " )
-                    && ( ( grid[row][col] == grid[row + 1][col + 2] )
-                        && ( grid[row + 1][col + 2] == grid[row + 2][col + 4])))
-                    return grid[row + 3][col + 6];
-            }
-        }
+       for ( int row = 0; row < 3; row++ )
+       {
+           for ( int col = 1; col < 9; col += 2 )
+           {
+               if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " " )
+                   && ( grid[row + 2][col + 4] != " " )
+                   && ( ( grid[row][col] == grid[row + 1][col + 2] )
+                       && ( grid[row + 1][col + 2] == grid[row + 2][col + 4])))
+                   return grid[row + 3][col + 6];
+           }
+       }
 
-        for ( int row = 0; row < 3; row++ )
-        {
-            for ( int col = 7; col < 15; col += 2 )
-            {
-                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
-                    && ( grid[row + 2][col - 4] != " " )
-                    && ( ( grid[row][col] == grid[row + 1][col - 2] )
-                        && ( grid[row + 1][col - 2] == grid[row + 2][col - 4])))
-                    return grid[row + 3][col - 6];
-            }
-        }
-        return null;
-    }
+       for ( int row = 0; row < 3; row++ )
+       {
+           for ( int col = 7; col < 15; col += 2 )
+           {
+               if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
+                   && ( grid[row + 2][col - 4] != " " )
+                   && ( ( grid[row][col] == grid[row + 1][col - 2] )
+                       && ( grid[row + 1][col - 2] == grid[row + 2][col - 4])))
+                   return grid[row + 3][col - 6];
+           }
+       }
+       return null;
+   }
+
 
 
 
