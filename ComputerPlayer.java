@@ -13,7 +13,7 @@ public class ComputerPlayer extends Player
     
     public void setPreviousHumanBids()
     {
-        previousHumanBids = test.getPreviousHumanBids();
+        previousHumanBids = test.getHumanPlayerBids();
     }
     
     public static int humanPlayerCoins()
