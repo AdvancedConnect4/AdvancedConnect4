@@ -1,85 +1,49 @@
 package connect4;
 
-public class ComputerPlayer extends Player
+import java.util.Scanner;
+
+public class ComputerPlayer 
 {
-    static Logic test = new Logic();
+    public static Logic testLogic = new Logic();
     static int computerPlayerCoins;
     static int humanPlayerCoins;
     static int bidAmount;
     static int computerMovesToWin;
-    static int humanMovesToWin; //how many moves it will take for the computer to win
-    static int[] previousHumanBids = new int[43]; //keeps track of the previous human bids that the human bidded
-    static int movesPlayed = 0; // how many moves have been played(not each player but total/2)
-    
-    public void setPreviousHumanBids()
-    {
-        previousHumanBids = test.getPreviousHumanBids();
-    }
+    static int humanMovesToWin;
+    static int nextMove = 1;
+
     
     public static int humanPlayerCoins()
     {
-        humanPlayerCoins = test.getYellowCoins();
-        return humanPlayerCoins;
+        return testLogic.getYellowCoins();
+
     }
     
     public static int computerPlayerCoins()
     {
-        computerPlayerCoins = test.getRedCoins();
+        computerPlayerCoins = testLogic.getRedCoins();
         return computerPlayerCoins;
     }
-
-    public static int bidAmount()
+    
+    
+    public void setNextMove()
     {
-        if((computerMovesToWin == 1) && (computerPlayerCoins() > humanPlayerCoins()))
-        {
-            bidAmount = humanPlayerCoins() + 1;
-        }
-        if((computerMovesToWin == 2) && (computerPlayerCoins() > ((2 *humanPlayerCoins()) + 1)))
-        {
-            bidAmount = humanPlayerCoins() + 1;
-        }
-        if((computerMovesToWin == 3) && (computerPlayerCoins() > ((3 *humanPlayerCoins()) + 1)))
-        {
-            bidAmount = humanPlayerCoins() + 1;
-        }
-        if((computerMovesToWin >= 4) && (computerPlayerCoins() > ((4 *humanPlayerCoins()) + 1)))
-        {
-            bidAmount = humanPlayerCoins() + 1;
-        }
-        if((computerMovesToWin == 2) && (computerPlayerCoins() > ((2 *humanPlayerCoins()) + 1)))
-        {
-            bidAmount = humanPlayerCoins() + 1;
-        }
-        if ((humanMovesToWin == 1)) //if the human is one step from winning, stop him at all costs!
-        {
-            if(computerPlayerCoins() > humanPlayerCoins())
-            {
-                bidAmount = humanPlayerCoins();
-            }
-            else
-            {
-                bidAmount = computerPlayerCoins() - 5;
-            }
-        }
-        if(humanMovesToWin == 2)
-        {
-            if((previousHumanBids[movesPlayed]- previousHumanBids[movesPlayed-1]) < 5)
-            {
-                bidAmount = previousHumanBids[movesPlayed] + 1;
-            }
-        }
-        if (bidAmount > computerPlayerCoins())
-        {
-            bidAmount = computerPlayerCoins();
-        }
-        movesPlayed++;
+        testLogic.setNextRedMove(nextMove);
+    }
+    
+    public int bidTokens() //Math.random()
+    {  
+        bidAmount = (int) (Math.random() * testLogic.getRedCoins());
         return bidAmount;
-        }
+        
+    }
+    
     
     public int computerMovesToWin()
     {
         
-        return computerMovesToWin;
+        return 2;
     }
     
 }
+
