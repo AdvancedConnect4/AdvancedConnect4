@@ -1,250 +1,89 @@
 package connect4;
 
-import java.util.Scanner;
-
-
-public class Logic
+public class ComputerPlayer extends Player
 {
-    public int yellow = 0;
-
-    public int red = 1;
-    private int turn;
-    public int tie = 2;
-    private int[] humanPlayerBids = new int[43];
-    public int yellowCoins = 100;
-    public int redCoins = 100;
-    private int nextRedBid;
-    private int nextRedMove;
+    static Logic test = new Logic();
+    static int computerPlayerCoins;
+    static int humanPlayerCoins;
+    static int bidAmount;
+    static int computerMovesToWin;
+    static int humanMovesToWin; //how many moves it will take for the computer to win
+    static int[] previousHumanBids = new int[43]; //keeps track of the previous human bids that the human bidded
+    static int movesPlayed = 0; // how many moves have been played(not each player but total/2)
     
-    ComputerPlayer comp = new ComputerPlayer();
-
-    public void setNextRedBid( int nextBid )
+    public void setPreviousHumanBids()
     {
-        nextRedBid = nextBid;
+        previousHumanBids = test.getHumanPlayerBids();
+    }
+    public void setMovesPlayed()
+    {
+        movesPlayed = test.getMovesPlayed();
+    }
+    public static int humanPlayerCoins()
+    {
+        humanPlayerCoins = test.getYellowCoins();
+        return humanPlayerCoins;
+    }
+    
+    public static int computerPlayerCoins()
+    {
+        computerPlayerCoins = test.getRedCoins();
+        return computerPlayerCoins;
     }
 
-    public void setNextRedMove( int nextMove )
+    public int bidAmount()
     {
-        nextRedMove = nextMove;
-    }
-
-    public int setRedCoins( int subtract )
-    {
-        return red;
-    }
-
-    public int getRedCoins()
-    {
-        return redCoins;
-    }
-
-    public int getYellowCoins()
-    {
-        return yellowCoins;
-    }
-
-    public int[] getHumanPlayerBids()
-    {
-        return humanPlayerBids;
-    }
-
-    public String[][] createGrid()
-    {
-        String[][] grid = new String[7][15];
-        for ( int row = 0; row < grid.length; row++ )
+        if((computerMovesToWin == 1) && (computerPlayerCoins() > humanPlayerCoins()))
         {
-            for ( int col = 0; col < grid[row].length; col++ )
+            bidAmount = humanPlayerCoins() + 1;
+        }
+        if((computerMovesToWin == 2) && (computerPlayerCoins() > ((2 *humanPlayerCoins()) + 1)))
+        {
+            bidAmount = humanPlayerCoins() + 1;
+        }
+        if((computerMovesToWin == 3) && (computerPlayerCoins() > ((3 *humanPlayerCoins()) + 1)))
+        {
+            bidAmount = humanPlayerCoins() + 1;
+        }
+        if((computerMovesToWin >= 4) && (computerPlayerCoins() > ((4 *humanPlayerCoins()) + 1)))
+        {
+            bidAmount = humanPlayerCoins() + 1;
+        }
+        if((computerMovesToWin == 2) && (computerPlayerCoins() > ((2 *humanPlayerCoins()) + 1)))
+        {
+            bidAmount = humanPlayerCoins() + 1;
+        }
+        if ((humanMovesToWin == 1)) //if the human is one step from winning, stop him at all costs!
+        {
+            if(computerPlayerCoins() > humanPlayerCoins())
             {
-                if ( col % 2 == 0 )
-                {
-                    grid[row][col] = "|";
-                }
-                else
-                {
-                    grid[row][col] = " ";
-                }
-                if ( row == 6 )
-                {
-                    grid[row][col] = "-";
-                }
+                bidAmount = humanPlayerCoins();
+            }
+            else
+            {
+                bidAmount = computerPlayerCoins() - 5;
             }
         }
-        return grid;
-    }
-
-
-    public void printGrid( String[][] grid )
-    {
-        for ( int row = 0; row < grid.length; row++ )
+        if(humanMovesToWin == 2)
         {
-            for ( int col = 0; col < grid[row].length; col++ )
+            if((previousHumanBids[movesPlayed]- previousHumanBids[movesPlayed-1]) < 5)
             {
-                System.out.print( grid[row][col] );
+                bidAmount = previousHumanBids[movesPlayed] + 1;
             }
-            System.out.println();
         }
-    }
-
-
-    public int getNextPlayer()
-    {
-//         System.out.println("How much to bid(red): ");
-//        
-//         Scanner scan = new Scanner(System.in);
-//        
-//         int redPlayer = scan.nextInt();
-
-       int computerRed = comp.bidAmount();
-       
+        if (bidAmount > computerPlayerCoins())
+        {
+            bidAmount = computerPlayerCoins();
+        }
+        movesPlayed++;
         
-        if (computerRed > redCoins )
-        {
-            computerRed = 0;
+        return bidAmount;
         }
-        redCoins = getRedCoins() - computerRed;
-
-        
-        System.out.println( "How much to bid(yellow): " );
-        Scanner scan = new Scanner( System.in );
-        int playerYellow = scan.nextInt();
-        if ( playerYellow > yellowCoins )
-        {
-            System.out.println( "You don't have that many coins. This bid is invalid and "
-                + "your turn is skipped" );
-            playerYellow = 0;
-        }
-        yellowCoins = yellowCoins - playerYellow;
-        humanPlayerBids[turn] = playerYellow;
-        if ( playerYellow > computerRed )
-        {
-            return yellow;
-        }
-        else if ( playerYellow == computerRed )
-        {
-            return tie;
-        }
-        else
-        {
-            return red;
-        }
-
-    }
-    
     
 
-
-    public void dropRedPattern( String[][] grid )
+    public int computerMovesToWin()
     {
-        System.out.println( "Drop a red token in column (0 -6): " );
-
-        Scanner scan = new Scanner( System.in );
-        nextRedMove = scan.nextInt();
-
-        int changeToOdd = ( 2 * nextRedMove ) + 1;
-
-        for ( int row = 5; row >= 0; row-- )
-        {
-            if ( grid[row][changeToOdd] == " " )
-            {
-                grid[row][changeToOdd] = "R";
-                break;
-            }
-        }
-
-    }
-
-    public void dropRedPatternAI( String[][] grid )
-    {
-        int changeToOdd = ( 2 * nextRedMove ) + 1;
-
-        for ( int row = 5; row >= 0; row-- )
-        {
-            if ( grid[row][changeToOdd] == " " )
-            {
-                grid[row][changeToOdd] = "R";
-                break;
-            }
-        }
-
+        return computerMovesToWin;
     }
     
-   
-
-
-    public void dropYellowPattern( String[][] grid )
-    {
-        System.out.println( "Drop a yellow disk at column (0–6): " );
-
-        Scanner scan = new Scanner( System.in );
-
-        int changeToOdd = 2 * scan.nextInt() + 1;
-
-        for ( int row = 5; row >= 0; row-- )
-        {
-            if ( grid[row][changeToOdd] == " " )
-            {
-                grid[row][changeToOdd] = "Y";
-                break;
-            }
-        }
-
-    }
-
-
-    public String checkWinner( String[][] grid )
-    {
-        for ( int row = 0; row < 6; row++ )
-        {
-            for ( int col = 0; col < 7; col += 2 )
-            {
-                if ( ( grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " " )
-                    && ( grid[row][col + 5] != " " ) && ( grid[row][col + 7] != " " )
-                    && ( ( grid[row][col + 1] == grid[row][col + 3] )
-                        && ( grid[row][col + 3] == grid[row][col + 5] )
-                        && ( grid[row][col + 5] == grid[row][col + 7] ) ) )
-                    return grid[row][col + 1];
-            }
-        }
-
-        for ( int row = 1; row < 15; row += 2 )
-        {
-            for ( int col = 0; col < 3; col++ )
-            {
-                if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
-                    && ( grid[col + 2][row] != " " ) && ( grid[col + 3][row] != " " )
-                    && ( ( grid[col][row] == grid[col + 1][row] )
-                        && ( grid[col + 1][row] == grid[col + 2][row] )
-                        && ( grid[col + 2][row] == grid[col + 3][row] ) ) )
-                    return grid[col][row];
-            }
-        }
-
-        for ( int row = 0; row < 3; row++ )
-        {
-            for ( int col = 1; col < 9; col += 2 )
-            {
-                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " " )
-                    && ( grid[row + 2][col + 4] != " " ) && ( grid[row + 3][col + 6] != " " )
-                    && ( ( grid[row][col] == grid[row + 1][col + 2] )
-                        && ( grid[row + 1][col + 2] == grid[row + 2][col + 4] )
-                        && ( grid[row + 2][col + 4] == grid[row + 3][col + 6] ) ) )
-                    return grid[row][col];
-            }
-        }
-
-        for ( int row = 0; row < 3; row++ )
-        {
-            for ( int col = 7; col < 15; col += 2 )
-            {
-                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
-                    && ( grid[row + 2][col - 4] != " " ) && ( grid[row + 3][col - 6] != " " )
-                    && ( ( grid[row][col] == grid[row + 1][col - 2] )
-                        && ( grid[row + 1][col - 2] == grid[row + 2][col - 4] )
-                        && ( grid[row + 2][col - 4] == grid[row + 3][col - 6] ) ) )
-                    return grid[row][col];
-            }
-        }
-        return null;
-    }
-
 }
