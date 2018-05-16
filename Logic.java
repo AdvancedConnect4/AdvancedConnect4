@@ -190,13 +190,14 @@ public class Logic
 
     }
     
-    public String checkTwoInaRow(String [][] grid)
+     public String checkTwoInaRow(String [][] grid)
    {
        for ( int row = 0; row < 6; row++ )
        {
            for ( int col = 0; col < 7; col += 2 )
            {
-               if ((grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " ")
+                if ((grid[row][col + 1] != " ") && (grid[row][col + 3] != " ")
+                        && (grid[row][col + 5] == " ")
                    && ( ( grid[row][col + 1] == grid[row][col + 3] )))
                    return grid[row][col + 5];
            }
@@ -206,8 +207,9 @@ public class Logic
        {
            for ( int col = 0; col < 3; col++ )
            {
-               if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
-                   && ( ( grid[col][row] == grid[col + 1][row] )))
+                if ((grid[col][row] != " ") && (grid[col + 1][row] != " ")
+                        && (grid[col + 2][row] == " ")
+                   && ((grid[col][row] == grid[col + 1][row] )))
                    return grid[col + 2][row];
            }
        }
@@ -216,7 +218,8 @@ public class Logic
        {
            for ( int col = 1; col < 9; col += 2 )
            {
-               if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " ")
+                if ((grid[row][col] != " ") && (grid[row + 1][col + 2] != " ")
+                        && (grid[row + 2][col + 4] == " ")
                    && ( ( grid[row][col] == grid[row + 1][col + 2] )))
                    return grid[row + 2][col + 4];
            }
@@ -226,8 +229,9 @@ public class Logic
        {
            for ( int col = 7; col < 15; col += 2 )
            {
-               if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
-                   && ( ( grid[row][col] == grid[row + 1][col - 2] )))
+                if ((grid[row][col] != " ") && (grid[row + 1][col - 2] != " ")
+                        && (grid[row + 2][col - 4] == " ")
+                        && ((grid[row][col] == grid[row + 1][col - 2])))
                    return grid[row + 2][col - 4];
            }
        }
@@ -241,7 +245,7 @@ public class Logic
            for ( int col = 0; col < 7; col += 2 )
            {
                if ( ( grid[row][col + 1] != " " ) && ( grid[row][col + 3] != " " )
-                   && ( grid[row][col + 5] != " " )
+                   && ( grid[row][col + 5] != " " ) && ( grid[row][col + 7] == " ")
                    && ( ( grid[row][col + 1] == grid[row][col + 3] )
                        && ( grid[row][col + 3] == grid[row][col + 5])))
                    return grid[row][col + 7];
@@ -253,7 +257,7 @@ public class Logic
            for ( int col = 0; col < 3; col++ )
            {
                if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
-                   && ( grid[col + 2][row] != " " )
+                   && ( grid[col + 2][row] != " " ) && (grid[col + 3][row] == " ")
                    && ( ( grid[col][row] == grid[col + 1][row] )
                        && ( grid[col + 1][row] == grid[col + 2][row] )))
                    return grid[col + 3][row];
@@ -265,7 +269,7 @@ public class Logic
            for ( int col = 1; col < 9; col += 2 )
            {
                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col + 2] != " " )
-                   && ( grid[row + 2][col + 4] != " " )
+                   && ( grid[row + 2][col + 4] != " " ) && (grid[row + 3][col + 6] == " ")
                    && ( ( grid[row][col] == grid[row + 1][col + 2] )
                        && ( grid[row + 1][col + 2] == grid[row + 2][col + 4])))
                    return grid[row + 3][col + 6];
@@ -277,7 +281,7 @@ public class Logic
            for ( int col = 7; col < 15; col += 2 )
            {
                if ( ( grid[row][col] != " " ) && ( grid[row + 1][col - 2] != " " )
-                   && ( grid[row + 2][col - 4] != " " )
+                   && ( grid[row + 2][col - 4] != " " ) && (grid[row + 3][col - 6] == " ")
                    && ( ( grid[row][col] == grid[row + 1][col - 2] )
                        && ( grid[row + 1][col - 2] == grid[row + 2][col - 4])))
                    return grid[row + 3][col - 6];
