@@ -3,22 +3,21 @@ package connect4;
 import java.util.Scanner;
 
 
-public class Logic extends ConnectFour
+public class Logic
 {
     ComputerPlayer compPlayer = new ComputerPlayer();
     public int yellow = 0;
     public int red = 1;
-    private int humanMovesPlayed;
+    private static int humanMovesPlayed;
     public int tie = 2;
-    private int[] humanPlayerBids = new int[43];
-    public int yellowCoins = 100;
-    public int redCoins = 100;
-    private int nextRedBid;
+    private static int[] humanPlayerBids = new int[43];
+    public static int yellowCoins = 100;
+    public static int redCoins = 100;
     private int nextRedMove;
     
     ComputerPlayer comp = new ComputerPlayer();
     
-    public int getMovesPlayed()
+    public static int getMovesPlayed()
     {
         return humanMovesPlayed;
     }
@@ -33,17 +32,17 @@ public class Logic extends ConnectFour
         return red;
     }
 
-    public int getRedCoins()
+    public static int getRedCoins()
     {
         return redCoins;
     }
 
-    public int getYellowCoins()
+    public static int getYellowCoins()
     {
         return yellowCoins;
     }
 
-    public int[] getHumanPlayerBids()
+    public static int[] getHumanPlayerBids()
     {
         return humanPlayerBids;
     }
@@ -84,38 +83,36 @@ public class Logic extends ConnectFour
             System.out.println();
         }
     }
-    
 
 
     public int getNextPlayer()
     {
-//         System.out.println("How much to bid(red): ");
-//        
-//         Scanner scan = new Scanner(System.in);
-//        
+//         System.out.println("How much to bid(red): "); 
+//         Scanner scan = new Scanner(System.in); 
 //         int redPlayer = scan.nextInt();
 
        int computerRed = compPlayer.bidAmount();
-       
-        
+
         if (computerRed > redCoins )
         {
             computerRed = 0;
         }
         redCoins = getRedCoins() - computerRed;
 
-        
         System.out.println( "How much to bid(yellow): " );
         Scanner scan = new Scanner( System.in );
         int playerYellow = scan.nextInt();
+        
         if ( playerYellow > yellowCoins )
         {
             System.out.println( "You don't have that many coins. This bid is invalid and "
                 + "your turn is skipped" );
             playerYellow = 0;
         }
+        
         yellowCoins = yellowCoins - playerYellow;
         humanPlayerBids[humanMovesPlayed] = playerYellow;
+        humanMovesPlayed++;
         if ( playerYellow > computerRed )
         {
             return yellow;
@@ -134,25 +131,25 @@ public class Logic extends ConnectFour
     
 
 
-    public void dropRedPattern( String[][] grid )
-    {
-        System.out.println( "Drop a red token in column (0 -6): " );
-
-        Scanner scan = new Scanner( System.in );
-        nextRedMove = scan.nextInt();
-
-        int changeToOdd = ( 2 * nextRedMove ) + 1;
-
-        for ( int row = 5; row >= 0; row-- )
-        {
-            if ( grid[row][changeToOdd] == " " )
-            {
-                grid[row][changeToOdd] = "R";
-                break;
-            }
-        }
-
-    }
+//    public void dropRedPattern( String[][] grid )
+//    {
+//        System.out.println( "Drop a red token in column (0 -6): " );
+//
+//        Scanner scan = new Scanner( System.in );
+//        nextRedMove = scan.nextInt();
+//
+//        int changeToOdd = ( 2 * nextRedMove ) + 1;
+//
+//        for ( int row = 5; row >= 0; row-- )
+//        {
+//            if ( grid[row][changeToOdd] == " " )
+//            {
+//                grid[row][changeToOdd] = "R";
+//                break;
+//            }
+//        }
+//
+//    }
 
     public void dropRedPatternAI( String[][] grid )
     {
@@ -191,24 +188,7 @@ public class Logic extends ConnectFour
 
     }
     
-   public String checkRedOneInaRow(String [][] grid)
-   {
-       for(int row = 0; row < 6; row++)
-       {
-           for(int col = 0; col < 7; col += 2)
-           {
-               if((grid[row][col + 1] != " ") && (grid[row][col +1] == "R"))
-               {
-                   return grid[row][col +3];
-                   if(grid[row][col +3] != " ")
-                   {
-                       return grid[]
-                   }
-               }
-           }
-       }
-   }
-   public String checkRedTwoInaRow(String [][] grid)
+     public String checkRedTwoInaRow(String [][] grid)
    {
        for ( int row = 0; row < 6; row++ )
        {
