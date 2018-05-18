@@ -24,20 +24,20 @@ public static void main (String[] args)
       if(playerTurn == red)
       {
           logic.dropRedPatternAI(grid);
-          System.out.println( "Yellow has " + Integer.valueOf(logic.getYellowCoins()) + " coins left");
-          System.out.println( "Red has " + Integer.valueOf(logic.getRedCoins()) + " coins left");
+          System.out.println( "Yellow has " + Integer.valueOf(Logic.getYellowCoins()) + " coins left");
+          System.out.println( "Red has " + Integer.valueOf(Logic.getRedCoins()) + " coins left");
       } 
       else if (playerTurn == yellow) 
       {
          logic.dropYellowPattern(grid);
-         System.out.println( "Yellow has " + Integer.valueOf(logic.getYellowCoins()) + " coins left");
-         System.out.println( "Red has " + Integer.valueOf(logic.getRedCoins()) + " coins left");
+         System.out.println( "Yellow has " + Integer.valueOf(Logic.getYellowCoins()) + " coins left");
+         System.out.println( "Red has " + Integer.valueOf(Logic.getRedCoins()) + " coins left");
      }
      else
      {
          System.out.println("There was a tie");
-         System.out.println( "Yellow has " + Integer.valueOf(logic.getYellowCoins() ) + " coins left");
-         System.out.println( "Red has " + Integer.valueOf(logic.getRedCoins()) + " coins left");
+         System.out.println( "Yellow has " + Integer.valueOf(Logic.getYellowCoins() ) + " coins left");
+         System.out.println( "Red has " + Integer.valueOf(Logic.getRedCoins()) + " coins left");
      }
      logic.printGrid(grid);
      
