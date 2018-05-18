@@ -7,11 +7,14 @@ public class ConnectFour
     public static int tie = 2;
     public static int yellowCoins = 100;
     public static int redCoins = 100;
-        
-static Logic logic = new Logic();
+    static Logic logic = new Logic();
+    public static String[][] grid = logic.createGrid();
+
+
+
 public static void main (String[] args)
 {
-  String[][] grid = logic.createGrid();
+
   boolean loop = true;
   logic.printGrid(grid);
   while(loop)
@@ -52,6 +55,16 @@ public static void main (String[] args)
        loop = false;
   }
   }
+}
+
+public String[][] getGrid()
+{
+     return grid;   
+}
+
+public String getMiddlePosition()
+{
+    return grid[0][8];
 }
 
 
