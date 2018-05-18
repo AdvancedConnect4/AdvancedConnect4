@@ -3,7 +3,7 @@ package connect4;
 import java.util.Scanner;
 
 
-public class Logic
+public class Logic extends ConnectFour
 {
     ComputerPlayer compPlayer = new ComputerPlayer();
     public int yellow = 0;
@@ -84,6 +84,7 @@ public class Logic
             System.out.println();
         }
     }
+    
 
 
     public int getNextPlayer()
@@ -190,7 +191,24 @@ public class Logic
 
     }
     
-     public String checkRedTwoInaRow(String [][] grid)
+   public String checkRedOneInaRow(String [][] grid)
+   {
+       for(int row = 0; row < 6; row++)
+       {
+           for(int col = 0; col < 7; col += 2)
+           {
+               if((grid[row][col + 1] != " ") && (grid[row][col +1] == "R"))
+               {
+                   return grid[row][col +3];
+                   if(grid[row][col +3] != " ")
+                   {
+                       return grid[]
+                   }
+               }
+           }
+       }
+   }
+   public String checkRedTwoInaRow(String [][] grid)
    {
        for ( int row = 0; row < 6; row++ )
        {
