@@ -22,6 +22,10 @@ public class Logic
         return humanMovesPlayed;
     }
 
+    public int[] getHumanBids()
+    {
+        return humanPlayerBids;
+    }
     public void setNextRedMove( int nextMove )
     {
         nextRedMove = nextMove;
@@ -111,8 +115,10 @@ public class Logic
         }
         
         yellowCoins = yellowCoins - playerYellow;
+        
         humanPlayerBids[humanMovesPlayed] = playerYellow;
         humanMovesPlayed++;
+        
         if ( playerYellow > computerRed )
         {
             return yellow;
@@ -153,7 +159,7 @@ public class Logic
 
     public void dropRedPatternAI( String[][] grid )
     {
-        int changeToOdd = ( 2 * nextRedMove ) + 1;
+        int changeToOdd = comp.getNextRedMove();
 
         for ( int row = 5; row >= 0; row-- )
         {
@@ -188,7 +194,7 @@ public class Logic
 
     }
     
-   public String checkRedTwoInaRow(String [][] grid)
+   public int checkRedTwoInaRow(String [][] grid)
    {
        for ( int row = 0; row < 6; row++ )
        {
@@ -197,7 +203,7 @@ public class Logic
                 if ((grid[row][col + 1] != " ") && (grid[row][col + 3] != " ")
                         && (grid[row][col + 5] == " ")
                    && ( ( grid[row][col + 1] == "R")) && (grid[row][col + 3] == "R" ))
-                   return grid[row][col + 5];
+                   return col +5;
            }
        }
 
@@ -208,7 +214,7 @@ public class Logic
                 if ((grid[col][row] != " ") && (grid[col + 1][row] != " ")
                         && (grid[col + 2][row] == " ")
                    && ((grid[col][row] == "R")) && (grid[col + 1][row] == "R"))
-                   return grid[col + 2][row];
+                   return col + 2;
            }
        }
 
@@ -219,7 +225,7 @@ public class Logic
                 if ((grid[row][col] != " ") && (grid[row + 1][col + 2] != " ")
                         && (grid[row + 2][col + 4] == " ")
                    && ( ( grid[row][col] == "R")) && (grid[row + 1][col + 2] == "R"))
-                   return grid[row + 2][col + 4];
+                   return col + 4;
            }
        }
 
@@ -230,10 +236,10 @@ public class Logic
                 if ((grid[row][col] != " ") && (grid[row + 1][col - 2] != " ")
                         && (grid[row + 2][col - 4] == " ")
                         && ((grid[row][col] == "R")) && (grid[row + 1][col - 2] == "R"))
-                   return grid[row + 2][col - 4];
+                   return col - 4;
            }
        }
-       return null;
+       return 8;
    }
 //   
 //   /**
@@ -290,7 +296,7 @@ public class Logic
 //       return null;
 //   }
 //   
-   public String checkYellowTwoInaRow(String [][] grid)
+   public int checkYellowTwoInaRow(String [][] grid)
    {
        for ( int row = 0; row < 6; row++ )
        {
@@ -299,7 +305,7 @@ public class Logic
                 if ((grid[row][col + 1] != " ") && (grid[row][col + 3] != " ")
                         && (grid[row][col + 5] == " ")
                    && ( ( grid[row][col + 1] == "Y")) && (grid[row][col + 3] == "Y" ))
-                   return grid[row][col + 5];
+                   return col + 5;
            }
        }
 
@@ -310,7 +316,7 @@ public class Logic
                 if ((grid[col][row] != " ") && (grid[col + 1][row] != " ")
                         && (grid[col + 2][row] == " ")
                    && ((grid[col][row] == "Y")) && (grid[col + 1][row] == "Y"))
-                   return grid[col + 2][row];
+                   return col + 2;
            }
        }
 
@@ -321,7 +327,7 @@ public class Logic
                 if ((grid[row][col] != " ") && (grid[row + 1][col + 2] != " ")
                         && (grid[row + 2][col + 4] == " ")
                    && ( ( grid[row][col] == "Y")) && (grid[row + 1][col + 2] == "Y"))
-                   return grid[row + 2][col + 4];
+                   return col + 2;
            }
        }
 
@@ -332,10 +338,11 @@ public class Logic
                 if ((grid[row][col] != " ") && (grid[row + 1][col - 2] != " ")
                         && (grid[row + 2][col - 4] == " ")
                         && ((grid[row][col] == "Y")) && (grid[row + 1][col - 2] == "Y"))
-                   return grid[row + 2][col - 4];
+  
+                   return col - 4;
            }
        }
-       return null;
+       return 8;
    }
    
    
