@@ -161,11 +161,12 @@ public class Logic
     {
         int changeToOdd = checkYellowVertical(grid);
 
-        for(int row = 0; row< 6; row++)
+        for(int row = 5; row> 0; row--)
         {
             if(grid[row][changeToOdd] == " ")
             {
                 grid[row][changeToOdd] = "R";
+                break;
             }
         }
 
@@ -295,19 +296,23 @@ public class Logic
 //       return null;
 //   }
 //   
-   public int checkYellowVertical(String[][] grid)
+ 
+   public Integer checkYellowVertical(String[][] grid)
    {
-       for ( int col = 0; col < 7; col += 2 )
+       for ( int row = 1; row < 15; row += 2 )
        {
-           for ( int row = 0; row < 6; row++ )
+           for ( int col = 0; col < 3; col++ )
            {
-                if ((grid[row][col] != " ") && (grid[row + 1][col] != " ")
-                        && (grid[row + 2][col] == " ")
-                   && ( ( grid[row][col] == "Y")) && (grid[row + 1][col] == "Y" ))
-                   return col;
+               if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
+                   && ( grid[col + 2][row] != " " ) && ( grid[col + 3][row] != " " )
+                   && ( ( grid[col][row] == grid[col + 1][row] )
+                       && ( grid[col + 1][row] == grid[col + 2][row] )
+                       && ( grid[col + 2][row] == grid[col + 3][row] ) ) )
+                   return row;
            }
        }
-       return 8;
+       
+       return 5;
    }
    public int checkYellowTwoInaRow(String [][] grid)
    {
@@ -327,10 +332,12 @@ public class Logic
        {
            for ( int col = 0; col < 3; col++ )
            {
-                if ((grid[col][row] != " ") && (grid[col + 1][row] != " ")
-                        && (grid[col + 2][row] == " ")
-                   && ((grid[col][row] == "Y")) && (grid[col + 1][row] == "Y"))
-                   return col + 2;
+               if ( ( grid[col][row] != " " ) && ( grid[col + 1][row] != " " )
+                   && ( grid[col + 2][row] != " " ) && ( grid[col + 3][row] != " " )
+                   && ( ( grid[col][row] == grid[col + 1][row] )
+                       && ( grid[col + 1][row] == grid[col + 2][row] )
+                       && ( grid[col + 2][row] == grid[col + 3][row] ) ) )
+                   return row;
            }
        }
 
