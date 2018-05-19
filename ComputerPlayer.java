@@ -1,108 +1,189 @@
 package connect4;
 
-public class ComputerPlayer extends Player {
+public class ComputerPlayer extends Player
+{
     static Logic test = new Logic();
+
     static ConnectFour connectfour = new ConnectFour();
-    static int computerPlayerCoins;
-    static int humanPlayerCoins;
-    static int bidAmount;
-    static int humanMovesToWin; // how many moves it will take for the computer
-                                // to win
+
+    static int computerPlayerCoins;// total coins of the
+                                   // computerPlayer-Red(constantly updated)
+
+    static int humanPlayerCoins; // total coins of humanPlayer-Yellow(constantly
+                                 // updated)
+
+    static int bidAmount; // amount to return to the logic class
+
+    static int humanMovesToWin; // how many moves it will take for the human aka
+                                // how many they have in a row right now
+
     static int[] previousHumanBids = new int[43]; // keeps track of the previous
-                                                  // human bids that the human
-                                                  // bidded
+                                                  // human bids in an array
+                                                  // getPreviousHumanMoves gets
+                                                  // the right move. For the
+                                                  // most recent move, use the
+                                                  // movesPlayed as the
+                                                  // parameter
+
     static int movesPlayed = 0; // how many moves have been played(not each
                                 // player but total/2)
-    
-    public void setMovesPlayed() 
+    /**
+     * 
+     * Gets the previous move that the humanPlayer made. The most recent move would be movesPlayed
+     * as the parameter. Subtract from movesPlayed to get older moves.
+     * @param move
+     * @return
+     */
+    public int getPreviousHumanMoves( int move )
     {
-        movesPlayed = Logic.getMovesPlayed();
-    }
-    
-    public int getPreviousHumanMoves(int move)
-    {
-        previousHumanBids = Logic.getHumanPlayerBids();
+        previousHumanBids = test.getHumanPlayerBids();
         return previousHumanBids[move];
     }
-    public static int humanPlayerCoins() {
+
+    /**
+     * 
+     *This method is called to get the correct number of humanPlayerCoins. We need to constantly 
+     *call it to make sure that the humanPlayerCoins we are using is correct.
+     * @return
+     */
+    public static int humanPlayerCoins()
+    {
         humanPlayerCoins = Logic.getYellowCoins();
         return humanPlayerCoins;
     }
 
-    public static int computerPlayerCoins() {
+    /**
+     * 
+     * Gets the amount of coins computerPlayer has.
+     * @return
+     */
+    public static int computerPlayerCoins()
+    {
         computerPlayerCoins = Logic.getRedCoins();
         return computerPlayerCoins;
     }
-    
-    public int computerMovesToWin() {
-        return 3;
-    }
 
-    public String humanMovesToWin() {
-        if (test.checkYellowThreeInaRow(connectfour.getGrid()) != null) {
-            humanMovesToWin = 1;
-            return test.checkYellowThreeInaRow(connectfour.getGrid());
-        } 
-        else if (test.checkYellowTwoInaRow(connectfour.getGrid()) != null) 
+
+    /**
+     * 
+     * This method should return the correct column that the computer should
+     * play at
+     * 
+     * @return
+     */
+    public String computerMove()
+    {
+        if ( test.checkYellowThreeInaRow( connectfour.getGrid() ) != null )
         {
-            humanMovesToWin = 2;
-            return test.checkYellowTwoInaRow(connectfour.getGrid());
+            return test.checkYellowThreeInaRow( connectfour.getGrid() );
         }
-        else{
-            humanMovesToWin = 4;
+        else if ( test.checkYellowTwoInaRow( connectfour.getGrid() ) != null )
+        {
+            return test.checkYellowTwoInaRow( connectfour.getGrid() );
+        }
+        else if ( movesPlayed == 0 )
+        {
             return connectfour.getMiddlePosition();
         }
+        else
+        {
+            return null;
+        }
     }
 
-    public int bidAmount() 
+    /**
+     * 
+     * how many moves to win is based on how many we have in a row right now.
+     * @return
+     */
+    public int computerMovesToWin()
     {
-       if ((computerMovesToWin() == 1)
-           && (computerPlayerCoins() > humanPlayerCoins())) 
-       {
-            bidAmount = humanPlayerCoins();
-        }
-        if ((computerMovesToWin() == 2)
-                && (computerPlayerCoins() > ((2 * humanPlayerCoins()) + 1))) 
+        if ( test.checkRedThreeInaRow( connectfour.getGrid() ) != null )
         {
-            bidAmount = humanPlayerCoins();
+            return 1;
         }
-        if ((computerMovesToWin() == 3)
-                && (computerPlayerCoins() > ((3 * humanPlayerCoins()) + 1))) 
+        else if ( test.checkRedTwoInaRow( connectfour.getGrid() ) != null )
         {
-            bidAmount = humanPlayerCoins();
+            return 2;
         }
-        if ((computerMovesToWin() >= 4)
-                && (computerPlayerCoins() > ((4 * humanPlayerCoins()) + 1))) 
+        else
         {
-            bidAmount = humanPlayerCoins();
+            return 4;
         }
-        if ((computerMovesToWin() == 2)
-                && (computerPlayerCoins() > ((2 * humanPlayerCoins()) + 1))) 
+    }
+
+    /**
+     * 
+     * This should return how many moves it would take the human to win, based on how many 
+     * tokens in a row they have.
+     * @return
+     */
+    public int humanMovesToWin()
+    {
+        if ( test.checkYellowThreeInaRow( connectfour.getGrid() ) != null )
         {
-            bidAmount = humanPlayerCoins();
+            return 1;
         }
-//        if ((humanMovesToWin == 1)) // if the human is one step from winning,
-//                                    // stop him at all costs!
+        else if ( test.checkYellowTwoInaRow( connectfour.getGrid() ) != null )
+        {
+            return 2;
+        }
+        else
+        {
+            return 4;
+        }
+    }
+
+    /**
+     * 
+     * This returns the amount that the computer will bid for their next move. This is based on 
+     * a variety of factors but mostly on the dominant strategy of nx+1
+     * @return
+     */
+    public int bidAmount()
+    {
+//        movesPlayed++;
+//        if ( ( computerMovesToWin() == 1 ) && ( computerPlayerCoins() > humanPlayerCoins() ) )
 //        {
-//            if (computerPlayerCoins() > humanPlayerCoins()) {
+//            return humanPlayerCoins();
+//        }
+//        else if ( ( computerMovesToWin() == 2 )
+//            && ( computerPlayerCoins() > ( ( 2 * humanPlayerCoins() ) + 1 ) ) )
+//        {
+//            return humanPlayerCoins();
+//        }
+//        else if ( ( computerMovesToWin() == 3 )
+//            && ( computerPlayerCoins() > ( ( 3 * humanPlayerCoins() ) + 1 ) ) )
+//        {
+//            return humanPlayerCoins();
+//        }
+//        else if ( ( computerMovesToWin() == 4 )
+//            && ( computerPlayerCoins() > ( ( 4 * humanPlayerCoins() ) + 1 ) ) )
+//        {
+//            return humanPlayerCoins();
+//        }
+//        else if ( ( humanMovesToWin == 1 ) ) // if the human is one step from winning stop him
+//        {
+//            if ( computerPlayerCoins() > humanPlayerCoins() )
+//            {
 //                bidAmount = humanPlayerCoins();
-//            } else {
-//                bidAmount = computerPlayerCoins() - 5;
+//            }
+//            else
+//            {
+//                bidAmount = computerPlayerCoins() - getPreviousHumanMoves(movesPlayed);
 //            }
 //        }
-//        if (humanMovesToWin == 2)
+//        if ( humanMovesToWin == 2 )//makes sure that human cannot barely beat the computerBid every time
 //        {
-//            if ((getPreviousHumanMoves(movesPlayed)
-//                            - getPreviousHumanMoves(movesPlayed - 1)) < 5) 
-//                    {
-//                        bidAmount = getPreviousHumanMoves(movesPlayed) + 1;
-//                    }
+//            if ( ( getPreviousHumanMoves( movesPlayed )
+//                - getPreviousHumanMoves( movesPlayed - 1 ) ) < 5 )
+//            {
+//                bidAmount = getPreviousHumanMoves( movesPlayed ) + 1;
+//            }
 //        }
 
-        movesPlayed++;
-        return bidAmount;
+            return getPreviousHumanMoves(movesPlayed);
+
     }
-
-
 
 }
