@@ -34,10 +34,18 @@ public class ComputerPlayer extends Player
      * @param move
      * @return
      */
+   
+    
+    public int getNextRedMove()
+    {
+        return test.checkYellowTwoInaRow(connectfour.getGrid());
+    }
+    
     public int getPreviousHumanMoves( int move )
     {
         previousHumanBids = test.getHumanPlayerBids();
         return previousHumanBids[move];
+        
     }
 
     /**
@@ -70,47 +78,48 @@ public class ComputerPlayer extends Player
      * play at
      * 
      * @return
-     */
-    public String computerMove()
-    {
-        if ( test.checkYellowThreeInaRow( connectfour.getGrid() ) != null )
-        {
-            return test.checkYellowThreeInaRow( connectfour.getGrid() );
-        }
-        else if ( test.checkYellowTwoInaRow( connectfour.getGrid() ) != null )
-        {
-            return test.checkYellowTwoInaRow( connectfour.getGrid() );
-        }
-        else if ( movesPlayed == 0 )
-        {
-            return connectfour.getMiddlePosition();
-        }
-        else
-        {
-            return null;
-        }
-    }
+//     */
+//    public String computerMove()
+//    {
+//        if ( test.checkYellowThreeInaRow( connectfour.getGrid() ) != null )
+//        {
+//            return test.checkYellowThreeInaRow( connectfour.getGrid() );
+//        }
+//        else if ( test.checkYellowTwoInaRow( connectfour.getGrid() ) != null )
+//        {
+//            return test.checkYellowTwoInaRow( connectfour.getGrid() );
+//        }
+//        else if ( movesPlayed == 0 )
+//        {
+//            return connectfour.getMiddlePosition();
+//        }
+//        else
+//        {
+//            return null;
+//        }
+//    }
 
     /**
      * 
      * how many moves to win is based on how many we have in a row right now.
      * @return
      */
-    public int computerMovesToWin()
-    {
-        if ( test.checkRedThreeInaRow( connectfour.getGrid() ) != null )
-        {
-            return 1;
-        }
-        else if ( test.checkRedTwoInaRow( connectfour.getGrid() ) != null )
-        {
-            return 2;
-        }
-        else
-        {
-            return 4;
-        }
-    }
+//    public int computerMovesToWin()
+//    {
+//        if ( test.checkRedThreeInaRow( connectfour.getGrid() ) != null )
+//        {
+//            return 1;
+//        }
+//        else if ( test.checkRedTwoInaRow( connectfour.getGrid() ) != null )
+//        {
+//            return 2;
+//        }
+//        else
+//        {
+//            return 4;
+//        }
+//    }
+//    
 
     /**
      * 
@@ -118,21 +127,21 @@ public class ComputerPlayer extends Player
      * tokens in a row they have.
      * @return
      */
-    public int humanMovesToWin()
-    {
-        if ( test.checkYellowThreeInaRow( connectfour.getGrid() ) != null )
-        {
-            return 1;
-        }
-        else if ( test.checkYellowTwoInaRow( connectfour.getGrid() ) != null )
-        {
-            return 2;
-        }
-        else
-        {
-            return 4;
-        }
-    }
+//    public int humanMovesToWin()
+//    {
+//        if ( test.checkYellowThreeInaRow( connectfour.getGrid() ) != null )
+//        {
+//            return 1;
+//        }
+//        else if ( test.checkYellowTwoInaRow( connectfour.getGrid() ) != null )
+//        {
+//            return 2;
+//        }
+//        else
+//        {
+//            return 4;
+//        }
+//    }
 
     /**
      * 
@@ -181,7 +190,6 @@ public class ComputerPlayer extends Player
 //                bidAmount = getPreviousHumanMoves( movesPlayed ) + 1;
 //            }
 //        }
-
             return getPreviousHumanMoves(movesPlayed);
 
     }
