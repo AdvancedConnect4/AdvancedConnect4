@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class Logic
 {
-    ComputerPlayer compPlayer = new ComputerPlayer();
-    public int yellow = 0;
+    ComputerPlayer compPlayer = new ComputerPlayer(); 
+    public int yellow = 0; //This is for the getNextPlayer method. If the input is 
     public int red = 1;
-    private static int humanMovesPlayed;
+    private static int humanMovesPlayed =0;
     public int tie = 2;
     private static int[] humanPlayerBids = new int[43];
     public static int yellowCoins = 100;
@@ -42,7 +42,7 @@ public class Logic
         return yellowCoins;
     }
 
-    public static int[] getHumanPlayerBids()
+    public int[] getHumanPlayerBids()
     {
         return humanPlayerBids;
     }
@@ -188,7 +188,7 @@ public class Logic
 
     }
     
-     public String checkRedTwoInaRow(String [][] grid)
+   public String checkRedTwoInaRow(String [][] grid)
    {
        for ( int row = 0; row < 6; row++ )
        {
@@ -235,7 +235,61 @@ public class Logic
        }
        return null;
    }
-   
+//   
+//   /**
+//    * What is the row that the move will be returned at?
+//    * TODO Write your method description here.
+//    * @param grid
+//    * @return
+//    */
+//   public int checkRedTwoInaRowMove(String [][] grid)
+//   {
+//       for ( int row = 0; row < 6; row++ )
+//       {
+//           for ( int col = 0; col < 7; col += 2 )
+//           {
+//                if ((grid[row][col + 1] != " ") && (grid[row][col + 3] != " ")
+//                        && (grid[row][col + 5] == " ")
+//                   && ( ( grid[row][col + 1] == "R")) && (grid[row][col + 3] == "R" ))
+//                   return ;
+//           }
+//       }
+//
+//       for ( int row = 1; row < 15; row += 2 )
+//       {
+//           for ( int col = 0; col < 3; col++ )
+//           {
+//                if ((grid[col][row] != " ") && (grid[col + 1][row] != " ")
+//                        && (grid[col + 2][row] == " ")
+//                   && ((grid[col][row] == "R")) && (grid[col + 1][row] == "R"))
+//                   return grid[col + 2][row];
+//           }
+//       }
+//
+//       for ( int row = 0; row < 3; row++ )
+//       {
+//           for ( int col = 1; col < 9; col += 2 )
+//           {
+//                if ((grid[row][col] != " ") && (grid[row + 1][col + 2] != " ")
+//                        && (grid[row + 2][col + 4] == " ")
+//                   && ( ( grid[row][col] == "R")) && (grid[row + 1][col + 2] == "R"))
+//                   return grid[row + 2][col + 4];
+//           }
+//       }
+//
+//       for ( int row = 0; row < 3; row++ )
+//       {
+//           for ( int col = 7; col < 15; col += 2 )
+//           {
+//                if ((grid[row][col] != " ") && (grid[row + 1][col - 2] != " ")
+//                        && (grid[row + 2][col - 4] == " ")
+//                        && ((grid[row][col] == "R")) && (grid[row + 1][col - 2] == "R"))
+//                   return grid[row + 2][col - 4];
+//           }
+//       }
+//       return null;
+//   }
+//   
    public String checkYellowTwoInaRow(String [][] grid)
    {
        for ( int row = 0; row < 6; row++ )
