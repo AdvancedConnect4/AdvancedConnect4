@@ -159,14 +159,13 @@ public class Logic
 
     public void dropRedPatternAI( String[][] grid )
     {
-        int changeToOdd = comp.getNextRedMove();
+        int changeToOdd = checkYellowVertical(grid);
 
-        for ( int row = 5; row >= 0; row-- )
+        for(int row = 0; row< 6; row++)
         {
-            if ( grid[row][changeToOdd] == " " )
+            if(grid[row][changeToOdd] == " ")
             {
                 grid[row][changeToOdd] = "R";
-                break;
             }
         }
 
@@ -296,8 +295,23 @@ public class Logic
 //       return null;
 //   }
 //   
+   public int checkYellowVertical(String[][] grid)
+   {
+       for ( int col = 0; col < 7; col += 2 )
+       {
+           for ( int row = 0; row < 6; row++ )
+           {
+                if ((grid[row][col] != " ") && (grid[row + 1][col] != " ")
+                        && (grid[row + 2][col] == " ")
+                   && ( ( grid[row][col] == "Y")) && (grid[row + 1][col] == "Y" ))
+                   return col;
+           }
+       }
+       return 8;
+   }
    public int checkYellowTwoInaRow(String [][] grid)
    {
+       //checks horizontal
        for ( int row = 0; row < 6; row++ )
        {
            for ( int col = 0; col < 7; col += 2 )
@@ -327,7 +341,7 @@ public class Logic
                 if ((grid[row][col] != " ") && (grid[row + 1][col + 2] != " ")
                         && (grid[row + 2][col + 4] == " ")
                    && ( ( grid[row][col] == "Y")) && (grid[row + 1][col + 2] == "Y"))
-                   return col + 2;
+                   return col + 4;
            }
        }
 
