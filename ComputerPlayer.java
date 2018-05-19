@@ -38,7 +38,7 @@ public class ComputerPlayer extends Player
     
     public int getNextRedMove()
     {
-        return test.checkYellowTwoInaRow(connectfour.getGrid());
+        return test.checkYellowVertical(connectfour.getGrid());
     }
     
     public int getPreviousHumanMoves( int move )
