@@ -104,8 +104,9 @@ public class ComputerPlayer extends Player
      * how many moves to win is based on how many we have in a row right now.
      * @return
      */
-//    public int computerMovesToWin()
-//    {
+    public int computerMovesToWin()
+    {
+        return 1;
 //        if ( test.checkRedThreeInaRow( connectfour.getGrid() ) != null )
 //        {
 //            return 1;
@@ -118,8 +119,8 @@ public class ComputerPlayer extends Player
 //        {
 //            return 4;
 //        }
-//    }
-//    
+    }
+    
 
     /**
      * 
@@ -127,8 +128,9 @@ public class ComputerPlayer extends Player
      * tokens in a row they have.
      * @return
      */
-//    public int humanMovesToWin()
-//    {
+    public int humanMovesToWin()
+    {
+        return 1;
 //        if ( test.checkYellowThreeInaRow( connectfour.getGrid() ) != null )
 //        {
 //            return 1;
@@ -141,7 +143,7 @@ public class ComputerPlayer extends Player
 //        {
 //            return 4;
 //        }
-//    }
+    }
 
     /**
      * 
@@ -151,47 +153,68 @@ public class ComputerPlayer extends Player
      */
     public int bidAmount()
     {
-//        movesPlayed++;
-//        if ( ( computerMovesToWin() == 1 ) && ( computerPlayerCoins() > humanPlayerCoins() ) )
-//        {
-//            return humanPlayerCoins();
-//        }
-//        else if ( ( computerMovesToWin() == 2 )
-//            && ( computerPlayerCoins() > ( ( 2 * humanPlayerCoins() ) + 1 ) ) )
-//        {
-//            return humanPlayerCoins();
-//        }
-//        else if ( ( computerMovesToWin() == 3 )
-//            && ( computerPlayerCoins() > ( ( 3 * humanPlayerCoins() ) + 1 ) ) )
-//        {
-//            return humanPlayerCoins();
-//        }
-//        else if ( ( computerMovesToWin() == 4 )
-//            && ( computerPlayerCoins() > ( ( 4 * humanPlayerCoins() ) + 1 ) ) )
-//        {
-//            return humanPlayerCoins();
-//        }
-//        else if ( ( humanMovesToWin == 1 ) ) // if the human is one step from winning stop him
-//        {
-//            if ( computerPlayerCoins() > humanPlayerCoins() )
-//            {
-//                bidAmount = humanPlayerCoins();
-//            }
-//            else
-//            {
-//                bidAmount = computerPlayerCoins() - getPreviousHumanMoves(movesPlayed);
-//            }
-//        }
-//        if ( humanMovesToWin == 2 )//makes sure that human cannot barely beat the computerBid every time
-//        {
-//            if ( ( getPreviousHumanMoves( movesPlayed )
-//                - getPreviousHumanMoves( movesPlayed - 1 ) ) < 5 )
-//            {
-//                bidAmount = getPreviousHumanMoves( movesPlayed ) + 1;
-//            }
-//        }
-            return getPreviousHumanMoves(movesPlayed);
-
+        //if computer needs one move to win and has more than human
+        if ( ( computerMovesToWin() == 1 ) && ( computerPlayerCoins() > humanPlayerCoins() ) )
+        {
+            if(humanPlayerCoins() > 0)
+            {
+                return humanPlayerCoins();
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else if ( ( computerMovesToWin() == 2 )
+            && ( computerPlayerCoins() > ( ( 2 * humanPlayerCoins() ) + 1 ) ) )
+        {
+            if(humanPlayerCoins()> 0)
+            {
+                return humanPlayerCoins();
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else if ( ( computerMovesToWin() == 3 )
+            && ( computerPlayerCoins() > ( ( 3 * humanPlayerCoins() ) + 1 ) ) )
+        {
+            if(humanPlayerCoins() > 0)
+            {
+                return humanPlayerCoins();
+            }
+            else
+            {
+                return 1;
+            }
+        }
+        else if ( ( computerMovesToWin() == 4 )
+            && ( computerPlayerCoins() > ( ( 4 * humanPlayerCoins() ) + 1 ) ) )
+        {
+            if(humanPlayerCoins() > 0)
+            {
+                return humanPlayerCoins();
+            }
+            else
+            {
+                return 1;
+            }
+            
+        }
+         if ( ( humanMovesToWin() == 1 ) ) // if the human is one step from winning stop him
+         {
+            if ( computerPlayerCoins() > humanPlayerCoins() )
+            {
+                return humanPlayerCoins();
+            }
+            else
+            {
+               return computerPlayerCoins();
+            }
+        }
+    
+        return 0;
     }
 
 }
