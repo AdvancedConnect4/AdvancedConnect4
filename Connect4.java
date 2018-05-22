@@ -3,70 +3,86 @@ package connect4;
 public class ConnectFour
 {
     public static int yellow = 0;
+
     public static int red = 1;
+
     public static int tie = 2;
+
     public static int yellowCoins = 100;
+
     public static int redCoins = 100;
+
     static Logic logic = new Logic();
-    public static String[][] grid = logic.createGrid();
+
+    static ComputerPlayer computerPlayer = new ComputerPlayer();
+
+    public static String[][] grid = logic.makeGrid();
 
 
+    public static void main( String[] args )
+    {
+        String[][] grid = logic.makeGrid();
+        boolean loop = true;
 
-public static void main (String[] args)
-{
+        logic.printPattern( grid );
 
-  boolean loop = true;
-  logic.printGrid(grid);
-  while(loop)
-  {
-      int playerTurn = logic.getNextPlayer();
-      
-      if(playerTurn == red)
-      {
-          logic.dropRedPatternAI(grid);
-          System.out.println( "Yellow has " + Integer.valueOf(logic.getYellowCoins()) + " coins left");
-          System.out.println( "Red has " + Integer.valueOf(logic.getRedCoins()) + " coins left");
-      } 
-      else if (playerTurn == yellow) 
-      {
-         logic.dropYellowPattern(grid);
-         System.out.println( "Yellow has " + Integer.valueOf(logic.getYellowCoins()) + " coins left");
-         System.out.println( "Red has " + Integer.valueOf(logic.getRedCoins()) + " coins left");
-     }
-     else
-     {
-         System.out.println("There was a tie");
-         System.out.println( "Yellow has " + Integer.valueOf(logic.getYellowCoins() ) + " coins left");
-         System.out.println( "Red has " + Integer.valueOf(logic.getRedCoins()) + " coins left");
-     }
-     logic.printGrid(grid);
-     
-     if (logic.checkWinner(grid) != null)
-     {
-        if (logic.checkWinner(grid) == "R")
+        while ( loop )
         {
-            System.out.println("The red player won.");
-            
-        }           
-        else if (logic.checkWinner(grid)== "Y")
-        {
-            System.out.println("The yellow player won.");
+            int computerBid = computerPlayer.getComputerBid();
+            int yellowBid = logic.getYellowPlayerBid();
+            if ( yellowBid > computerBid )
+            {
+                logic.dropYellowPattern( grid );
+                System.out.println(
+                    "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
+                System.out.println(
+                    "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
+            }
+            if ( yellowBid < computerBid )
+            {
+                computerPlayer.dropRedPattern( grid );
+                System.out.println(
+                    "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
+                System.out.println(
+                    "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
+            }
+            if(yellowBid == computerBid)
+            {
+                System.out.println( "Tie bid, try again" );
+                System.out.println(
+                    "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
+                System.out.println(
+                    "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
+            }
+            logic.printPattern( grid );
+            if ( logic.checkWinner( grid ) != null )
+            {
+                if ( logic.checkWinner( grid ) == "R" )
+                {
+                    System.out.println( "The red player won." );
+                }
+                else if ( logic.checkWinner( grid ) == "Y" )
+                {
+                    System.out.println( "The yellow player won." );
+                }
+                loop = false;
+
+            }
+
         }
-       loop = false;
-  }
-  }
-}
 
-public String[][] getGrid()
-{
-     return grid;   
-}
-
-public String getMiddlePosition()
-{
-    return grid[0][8];
-}
+    }
 
 
+    public String[][] getGrid()
+    {
+        return grid;
+    }
+
+
+    public String getMiddlePosition()
+    {
+        return grid[0][8];
+    }
 
 }
