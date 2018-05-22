@@ -5,10 +5,10 @@ import java.util.Scanner;
 public class ComputerPlayer 
 {
     public static int computerCoins = 100;
+
     public static int getComputerBid()
     {
-        int thirdOfRemainingCoins = computerCoins /3;
-        int bid = (int)(thirdOfRemainingCoins*Math.random());
+        int bid = (int)(computerCoins/8 + (int)(Math.random() * ((computerCoins/6 - computerCoins/8) + 1)));
         if (bid > computerCoins)
         {
             return 0;
