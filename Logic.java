@@ -82,6 +82,8 @@ public class Logic
   {
       return humanCoins;
   }
+  
+  
   public static int getYellowPlayerBid()
   {
       System.out.println("How much to bid: ");
@@ -91,18 +93,36 @@ public class Logic
       {
           return 0;
       }
+      else if (bid < 0)
+      {
+          return 0;
+      }
       humanCoins -= bid;
       return bid;
   }
+  
+  
   public static void dropYellowPattern(String[][] grid)
   {
     System.out.println("Drop a yellow disk at column (0–6): ");
-
+    int changeToOdd;
     Scanner scan = new Scanner (System.in);
+    changeToOdd = scan.nextInt();
+    if (changeToOdd > 6) //if the column to play is not in play
+    {
+        changeToOdd = 13;
+    }
+    else if(changeToOdd < 0) // if column is not in play go at 0
+    {
+        changeToOdd = 1;
+    }
+    else 
+    {
+        changeToOdd = 2*scan.nextInt()+1;
+    }
 
-    int changeToOdd = 2*scan.nextInt()+1;
 
-    for (int row  =5; row>=0; row--)
+    for (int row=5 ; row>=0; row--)
     {
       if (grid[row][changeToOdd] == " ")
       {
