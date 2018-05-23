@@ -21,6 +21,14 @@ public class ComputerPlayer
         for (int row =0; row<6; row++) {
             for (int col =0; col<7; col++) {
                 changeToOdd = 2*col +1;
+              //Check vertical (RRR_ or _RRR)
+                if (row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd] == "R" && f[row-2][changeToOdd] == "R") {
+           //         System.out.println("vertical row=" + row + " changeToOdd=" + changeToOdd);
+                    if (row > 2 && f[row-3][changeToOdd] == " " || f[row+1][changeToOdd] == " ") {
+                //        System.out.println("Return row changeToOdd=" + changeToOdd);
+                        return changeToOdd;                  
+                    }
+                }
                 //Check horizontal, one empty between 4 R (RR_R or R_RR) 
                 if (changeToOdd < 12  && f[row][changeToOdd] == "R" && f[row][changeToOdd+ 2] == "R")   
                 {
@@ -42,14 +50,7 @@ public class ComputerPlayer
                         return changeToOdd -2;
                     }
                 }    
-                //Check vertical (RRR_ or _RRR)
-                if (row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd] == "R" && f[row-2][changeToOdd] == "R") {
-           //         System.out.println("vertical row=" + row + " changeToOdd=" + changeToOdd);
-                    if (row > 2 && f[row-3][changeToOdd] == " " || f[row+1][changeToOdd] == " ") {
-                //        System.out.println("Return row changeToOdd=" + changeToOdd);
-                        return changeToOdd;                  
-                    }
-                }
+                
                 //check diagonal bottom up
                 if (changeToOdd < 10 && row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd + 2] == "R" && f[row-2][changeToOdd + 4] == "R") {
                     
