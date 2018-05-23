@@ -32,7 +32,7 @@ public class ConnectFour
             int yellowBid = logic.getYellowPlayerBid();
             if ( yellowBid > computerBid )
             {
-                logic.dropYellowPattern( grid );
+                Logic.dropYellowPattern( grid );
                 System.out.println(
                     "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
                 System.out.println(
