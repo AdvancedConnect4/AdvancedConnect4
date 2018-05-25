@@ -16,28 +16,38 @@ public class ComputerPlayer
         computerCoins -= bid;
         return bid;
     }
-    public static int checkIfComputerWins(String[][] f) {
+    public static int checkIfComputerWins(String[][] f) 
+    {
         int changeToOdd = 0;
-        for (int row =0; row<6; row++) {
-            for (int col =0; col<7; col++) {
+        for (int row =0; row<6; row++) 
+        {
+            for (int col =0; col<7; col++) 
+            {
                 changeToOdd = 2*col +1;
-              //Check vertical (RRR_ or _RRR)
-                if (row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd] == "R" && f[row-2][changeToOdd] == "R") {
+                
+                //Check vertical (RRR_ or _RRR)
+                if (row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd] == "R" && f[row-2][changeToOdd] == "R") 
+                {
            //         System.out.println("vertical row=" + row + " changeToOdd=" + changeToOdd);
-                    if (row > 2 && f[row-3][changeToOdd] == " " || f[row+1][changeToOdd] == " ") {
+                    if (row > 2 && f[row-3][changeToOdd] == " " || f[row+1][changeToOdd] == " ") 
+                    {
                 //        System.out.println("Return row changeToOdd=" + changeToOdd);
                         return changeToOdd;                  
                     }
                 }
+                
                 //Check horizontal, one empty between 4 R (RR_R or R_RR) 
                 if (changeToOdd < 12  && f[row][changeToOdd] == "R" && f[row][changeToOdd+ 2] == "R")   
                 {
+                    
                     //(RR_R)
-                    if (changeToOdd < 8 && f[row][changeToOdd+ 4] == " " && f[row][changeToOdd+6] != " " && f[row + 1][changeToOdd+4] != " ") {
+                    if (changeToOdd < 8 && f[row][changeToOdd+ 4] == " " && f[row][changeToOdd+6] != " " && f[row + 1][changeToOdd+4] != " ") 
+                    {
                         return changeToOdd+ 4;
                     }
-                    else if (changeToOdd >= 2 && f[row][changeToOdd -2] == " " && f[row][changeToOdd -4] != " " && f[row + 1][changeToOdd-2] != " ") {//R_RR
-                        return changeToOdd -2;
+                    else if (changeToOdd >= 4 && f[row][changeToOdd -2] == " " && f[row][changeToOdd -4] != " " && f[row + 1][changeToOdd-2] != " ") 
+                    {//R_RR
+                        return changeToOdd - 2;
                     }
                 }  
                 //Check horizontal, 3 R continous(RRR_ or _RRR)
@@ -50,6 +60,7 @@ public class ComputerPlayer
                         return changeToOdd -2;
                     }
                 }    
+                
                 
                 //check diagonal bottom up
                 if (changeToOdd < 10 && row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd + 2] == "R" && f[row-2][changeToOdd + 4] == "R") {
