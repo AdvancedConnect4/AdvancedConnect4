@@ -79,7 +79,7 @@ public class ComputerPlayer
         return -1; //player chance to play
     }
     
-    public static int getComputerChoice(String[][] f)
+    public static int getComputerTurn(String[][] f)
     {
         int changeToOdd = checkIfComputerWins(f);
         if (changeToOdd != -1) {
@@ -87,8 +87,10 @@ public class ComputerPlayer
             return changeToOdd;
         }
         
-        for (int row =0; row<6; row++) {
-          for (int col =0; col<7; col++) {
+        for (int row =0; row<6; row++) 
+        {
+          for (int col =0; col<7; col++)
+          {
               changeToOdd = 2*col +1;
               //Check horizontal 
               if (changeToOdd < 12  && f[row][changeToOdd] == "Y" && f[row][changeToOdd+ 2] == "Y")   
