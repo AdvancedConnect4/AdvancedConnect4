@@ -16,20 +16,20 @@ public class ComputerPlayer
         computerCoins -= bid;
         return bid;
     }
-    public static int checkIfComputerWins(String[][] f) 
+public static int checkIfComputerWins(String[][] f) 
     {
         int changeToOdd = 0;
         for (int row =0; row<6; row++) 
         {
             for (int col =0; col<7; col++) 
             {
-                changeToOdd = 2*col +1;
+                changeToOdd = col;//2*col +1;
                 
                 //Check vertical (RRR_ or _RRR)
                 if (row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd] == "R" && f[row-2][changeToOdd] == "R") 
                 {
            //         System.out.println("vertical row=" + row + " changeToOdd=" + changeToOdd);
-                    if (row > 2 && f[row-3][changeToOdd] == " " || f[row+1][changeToOdd] == " ") 
+                    if (row > 2 && row < 5 && f[row-3][changeToOdd] == " " || row < 5 && f[row+1][changeToOdd] == " ") 
                     {
                 //        System.out.println("Return row changeToOdd=" + changeToOdd);
                         return changeToOdd;                  
@@ -37,47 +37,48 @@ public class ComputerPlayer
                 }
                 
                 //Check horizontal, one empty between 4 R (RR_R or R_RR) 
-                if (changeToOdd < 12  && f[row][changeToOdd] == "R" && f[row][changeToOdd+ 2] == "R")   
+                if (changeToOdd < 5  && f[row][changeToOdd] == "R" && f[row][changeToOdd+ 1] == "R")   
                 {
                     
                     //(RR_R)
-                    if (changeToOdd < 8 && f[row][changeToOdd+ 4] == " " && f[row][changeToOdd+6] != " " && f[row + 1][changeToOdd+4] != " ") 
+                    if (changeToOdd < 4 && row < 5 && f[row][changeToOdd+ 2] == " " && f[row][changeToOdd+3] != " " && f[row + 1][changeToOdd+2] != " ") 
                     {
-                        return changeToOdd+ 4;
+                        return changeToOdd+ 2;
                     }
-                    else if (changeToOdd >= 4 && f[row][changeToOdd -2] == " " && f[row][changeToOdd -4] != " " && f[row + 1][changeToOdd-2] != " ") 
+                    else if (changeToOdd >= 2 && row < 5 && f[row][changeToOdd -1] == " " && f[row][changeToOdd -2] != " " && f[row + 1][changeToOdd-1] != " ") 
                     {//R_RR
-                        return changeToOdd - 2;
+                        return changeToOdd - 1;
                     }
                 }  
                 //Check horizontal, 3 R continous(RRR_ or _RRR)
-                if (changeToOdd < 10  && f[row][changeToOdd] == "R" && f[row][changeToOdd+ 2] == "R" && f[row][changeToOdd+ 4] == "R")   
+                if (changeToOdd < 5  && row < 5 && f[row][changeToOdd] == "R" && f[row][changeToOdd+ 1] == "R" && f[row][changeToOdd+ 2] == "R")   
                 {
-                    if (changeToOdd < 8 &&  f[row][changeToOdd+ 6] == " " && f[row + 1][changeToOdd+6] != " ") {
-                        return changeToOdd+ 6;
+                    if (changeToOdd < 4 &&  f[row][changeToOdd+ 3] == " " && f[row + 1][changeToOdd+3] != " ") {
+                        return changeToOdd+ 3;
                     }
-                    else if (changeToOdd >= 2 &&  f[row][changeToOdd -2] == " " && f[row + 1][changeToOdd-2] != " ") {
-                        return changeToOdd -2;
+                    else if (changeToOdd >= 1 &&  f[row][changeToOdd -1] == " " && f[row + 1][changeToOdd-1] != " ") {
+                        return changeToOdd -1;
                     }
                 }    
                 
                 
                 //check diagonal bottom up
-                if (changeToOdd < 10 && row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd + 2] == "R" && f[row-2][changeToOdd + 4] == "R") {
+                if (changeToOdd < 5 && row > 1 && f[row][changeToOdd] == "R" && f[row-1][changeToOdd + 1] == "R" && f[row-2][changeToOdd + 2] == "R") {
                     
-                    if (row > 3 && changeToOdd < 8 && f[row -3 ][changeToOdd + 6] == " " && f[row -2 ][changeToOdd + 6] != " ") {
+                    if (row > 3 && changeToOdd < 4 && f[row -3 ][changeToOdd + 3] == " " && f[row -2 ][changeToOdd + 3] != " ") {
                         System.out.println("col computer=" + changeToOdd);
-                        return changeToOdd + 6;
+                        return changeToOdd + 3;
                     }
-                    else if (changeToOdd > 1 && f[row +1 ][changeToOdd -2] == " " && f[row + 2 ][changeToOdd - 2] != " ") {
+                    else if (changeToOdd > 1 && row < 4 && f[row +1 ][changeToOdd -1] == " " && f[row + 2 ][changeToOdd - 1] != " ") {
                         System.out.println("col computer=" + changeToOdd);
-                        return changeToOdd + 4;
+                        return changeToOdd + 2;
                     }
                 }                  
             }
         }        
         return -1; //player chance to play
     }
+    
     
     public static int getComputerTurn(String[][] f)
     {
@@ -91,49 +92,51 @@ public class ComputerPlayer
         {
           for (int col =0; col<7; col++)
           {
-              changeToOdd = 2*col +1;
+              changeToOdd = col;//2*col +1;
               //Check horizontal 
-              if (changeToOdd < 12  && f[row][changeToOdd] == "Y" && f[row][changeToOdd+ 2] == "Y")   
+              if (changeToOdd < 6  && f[row][changeToOdd] == "Y" && f[row][changeToOdd+ 1] == "Y")   
               {    
                   System.out.println("horizontal row=" + row + " changeToOdd=" + changeToOdd);
-                  if (changeToOdd < 10 &&  f[row][changeToOdd+ 4] == " " && f[row + 1][changeToOdd+4] != " ") {
-                      return changeToOdd+ 4;
-                  }
-                  else if (changeToOdd >= 2 &&  f[row][changeToOdd -2] == " " && f[row + 1][changeToOdd-2] != " ") {
-                      return changeToOdd -2;
+                  //YY_ horizontal
+                  if (changeToOdd < 5 &&  f[row][changeToOdd+ 2] == " "  && (row == 5 || row < 5 && f[row + 1][changeToOdd+2] != " ")) {
+                      return changeToOdd+ 2;
+                  } //_YY
+                  else if (changeToOdd >= 1 &&  f[row][changeToOdd -1] == " " && (row == 5 || row < 5 && f[row + 1][changeToOdd-1] != " ")) {
+                      return changeToOdd -1;
                   }
               //    System.out.println("No horizontol");
               } 
-              //Check vertical
+              //Check vertical YY_
               if (row > 0 && f[row][changeToOdd] == "Y" && f[row-1][changeToOdd] == "Y") {
                   //System.out.println("vertical row=" + row + " changeToOdd=" + changeToOdd);
-                  if (row > 1 && f[row-2][changeToOdd] == " " || f[row+1][changeToOdd] == " ") {
+                  if (row > 1 && f[row-2][changeToOdd] == " " || row < 5 && f[row+1][changeToOdd] == " ") {
                       //System.out.println("Return changeToOdd=" + changeToOdd);
                       return changeToOdd;                  
                   }
               //    System.out.println("No vertical");
               }
-              if (changeToOdd < 10 && row > 0 && 
-                      f[row][changeToOdd] == "Y" && f[row-1][changeToOdd + 2] == "Y" && f[row][changeToOdd + 4] != " " && f[row -1 ][changeToOdd + 4] != " ") {
+              //Check for diagonal
+              if (changeToOdd < 5 && row > 0 && 
+                      f[row][changeToOdd] == "Y" && f[row-1][changeToOdd + 1] == "Y" && f[row][changeToOdd + 2] != " " && f[row -1 ][changeToOdd + 2] != " ") {
                   System.out.println("col computer=" + changeToOdd);
-                  return changeToOdd + 4;
+                  return changeToOdd + 2;
               }  
             }
         }
         //Now check for diagonal 
         for (int row =0; row<6; row++) {
             for (int col =0; col<7; col++) {
-                changeToOdd = 2*col +1;
+                changeToOdd = col; //2*col +1;
                 //System.out.println("diagonal row=" + row + " changeToOdd=" + changeToOdd);
-                if (changeToOdd < 10 && row > 0 && 
-                        f[row][changeToOdd] == "Y" && f[row-1][changeToOdd + 2] == "Y" && f[row][changeToOdd + 4] != " " && f[row -1 ][changeToOdd + 4] != " ") {
+                if (changeToOdd < 5 && row > 0 && 
+                        f[row][changeToOdd] == "Y" && f[row-1][changeToOdd + 1] == "Y" && f[row][changeToOdd + 2] != " " && f[row -1 ][changeToOdd + 2] != " ") {
                     System.out.println("col computer=" + changeToOdd);
-                    return changeToOdd + 4;
+                    return changeToOdd + 2;
                 }                  
               }
           }
         int scan = (int) (Math.random() * 7);
-        return 2*scan +1;
+        return scan;//2*scan +1;
     }
     
     public static void dropRedPattern(String[][] f)
@@ -142,14 +145,14 @@ public class ComputerPlayer
       //System.out.println("Drop a red disk at column (0–6): ");
       //Scanner scan = new Scanner (System.in);
 
-      int changeToOdd = getComputerChoice(f);
+      int changeToOdd = getComputerTurn(f);
       
       //System.out.println("computer=" + changeToOdd);
     //  int changeToOdd = 2*scan +1;
      
       for (int row =5; row>=0; row--)
      {
-       if (f[row][changeToOdd] == " ")
+       if (f[row][changeToOdd] == " " || f[row][changeToOdd] == "|")
 
        {
          f[row][changeToOdd] = "R";
@@ -162,6 +165,8 @@ public class ComputerPlayer
       }
 
     }
+    
+}
     public static int getRedCoins()
     {
         return computerCoins;
