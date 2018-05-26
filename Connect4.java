@@ -18,20 +18,24 @@ public class ConnectFour
 
     public static String[][] grid = logic.makeGrid();
 
+    public static boolean playerRedturn = false;
+    
+    public static boolean playerYellowturn = false;
 
     public static void main( String[] args )
     {
-        String[][] grid = logic.makeGrid();
+        String[][] grid = Logic.makeGrid();
         boolean loop = true;
 
-        logic.printPattern( grid );
+        Logic.printPatternWithoutGrid( grid );
 
         while ( loop )
         {
-            int computerBid = computerPlayer.getComputerBid();
-            int yellowBid = logic.getYellowPlayerBid();
+            int computerBid = ComputerPlayer.getComputerBid();
+            int yellowBid = Logic.getYellowPlayerBid();
             if ( yellowBid > computerBid )
             {
+                playerYellowturn = true;
                 Logic.dropYellowPattern( grid );
                 System.out.println(
                     "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
@@ -40,6 +44,7 @@ public class ConnectFour
             }
             if ( yellowBid < computerBid )
             {
+                playerRedturn = true;
                 computerPlayer.dropRedPattern( grid );
                 System.out.println(
                     "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
@@ -54,7 +59,7 @@ public class ConnectFour
                 System.out.println(
                     "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
             }
-            logic.printPattern( grid );
+            logic.printPatternWithoutGrid( grid );
             if ( logic.checkWinner( grid ) != null )
             {
                 if ( logic.checkWinner( grid ) == "R" )
