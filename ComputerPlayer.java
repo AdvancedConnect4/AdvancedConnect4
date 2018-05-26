@@ -14,7 +14,7 @@ public class ComputerPlayer
             return 0;
         }
         computerCoins -= bid;
-        return bid;
+        return 16;
     }
 public static int checkIfComputerWins(String[][] f) 
     {
@@ -166,7 +166,7 @@ public static int checkIfComputerWins(String[][] f)
 
     }
     
-}
+
     public static int getRedCoins()
     {
         return computerCoins;
