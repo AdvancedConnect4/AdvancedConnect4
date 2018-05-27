@@ -1,6 +1,8 @@
 package connect4;
 
-public class ConnectFour
+import java.util.Scanner;
+
+public class ConnectFour 
 {
     public static int yellow = 0;
 
@@ -22,7 +24,9 @@ public class ConnectFour
     
     public static boolean playerYellowturn = false;
 
-    public static void main( String[] args )
+
+    public static void main (String[] args)
+
     {
         String[][] grid = Logic.makeGrid();
         boolean loop = true;
@@ -59,7 +63,7 @@ public class ConnectFour
                 System.out.println(
                     "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
             }
-            logic.printPatternWithoutGrid( grid );
+            logic.printPatternWithGrid( grid );
             if ( logic.checkWinner( grid ) != null )
             {
                 if ( logic.checkWinner( grid ) == "R" )
@@ -76,18 +80,7 @@ public class ConnectFour
 
         }
 
-    }
+  }
 
-
-    public String[][] getGrid()
-    {
-        return grid;
-    }
-
-
-    public String getMiddlePosition()
-    {
-        return grid[0][8];
-    }
 
 }
