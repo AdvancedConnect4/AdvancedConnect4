@@ -1,4 +1,5 @@
 package connect4;
+package connect4;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -70,6 +71,7 @@ public class BettingHandler {
       else 
           msg = "Computer";
       System.out.println(msg + " gets first turn for game " + gamesPlayed + " you are betting $" + playerBet + " against computer bet $" + computerBet + "\n");
+      //scan.close();
       return playerFirst;
     }
     
