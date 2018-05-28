@@ -155,7 +155,7 @@ public class Logic
     //checks left to right diagonal
     for (int row=0;row<3;row++)
     {
-      for (int col=1;col<4;col++)
+      for (int col=0;col<4;col++)
       {
             if((f[row][col] != " ") && (f[row+1][col+1] != " ")
             && (f[row+2][col+2] != " ") && (f[row+3][col+3] != " ")
@@ -171,7 +171,7 @@ public class Logic
     //checks right to left diagonal
     for (int row=0; row<3; row++)
     {
-        for (int col=6; col<7; col++)
+        for (int col=6; col>2; col--)
         {
             if((f[row][col] != " ") && (f[row+1][col-1] != " ")&& (f[row+2][col-2] != " ")
                     && (f[row+3][col-3] != " ")  && ((f[row][col] == f[row+1][col-1])
@@ -182,6 +182,21 @@ public class Logic
       } 
 
     }
+    if (tie(f))
+        return "T";
     return "N"; //none
+  }
+  
+  private static boolean tie(String[][] grid) {      
+      for (int row =0; row < grid.length; row++)
+      {
+        for (int col=0; col< grid[row].length; col++)
+        {
+            if (grid[row][col] == " ")
+                return false;
+        }
+        
+      }
+      return true;
   }
 }
