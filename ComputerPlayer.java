@@ -1,226 +1,350 @@
 package connect4;
 
-public class ComputerPlayer 
-{   
-    public int checkIfComputerWins(String[][] f) 
+/**
+ * 
+ *  This class decides where the computerPlayer should play.
+ *  The methods below detail how the computer chooses.
+ *
+ *  @author  Albert Su
+ *  @author Arnav Gupta
+ *  @version May 28, 2018
+ *  @author  Period: 2
+ *  @author  Assignment: FinalProject
+ *
+ *  @author  Sources: None
+ */
+public class ComputerPlayer
+{
+    /**
+     * 
+     * This method returns the move that the computer should play in in order to
+     * win. For example, it starts off by checking the vertical columns because
+     * this is the likeliest possibility for winning. It then follows up by
+     * checking the horizontal possibilities both continuous(already 3 in a row)
+     * and non continuous(ie YY_Y) if the move is playable. It then checks for
+     * the diagonal 4 in a row starting from the bottom. If this move is valid,
+     * then it will return that move.
+     * 
+     * @param f
+     *            the state of the grid.
+     * @return if there is a winning move, then it will return the column that
+     *         the computer will play in, otherwise, it would return the -1.
+     */
+    public int checkIfComputerWins( String[][] f )
     {
-        for (int row =0; row<6; row++) 
+        for ( int row = 0; row < 6; row++ )
         {
-            for (int col =0; col<7; col++) 
-            {                
-                //Check vertical (RRR_ or _RRR)
-                if (row > 1 && f[row][col] == "R" && f[row-1][col] == "R" && f[row-2][col] == "R") 
+            for ( int col = 0; col < 7; col++ )
+            {
+                // Check vertical (RRR_ or _RRR)
+                if ( row > 1 && f[row][col] == "R" && f[row - 1][col] == "R"
+                    && f[row - 2][col] == "R" )
                 {
-                    if (row > 2 && row < 5 && f[row-3][col] == " " || row < 5 && f[row+1][col] == " ") 
+                    if ( row > 2 && row < 5 && f[row - 3][col] == " "
+                        || row < 5 && f[row + 1][col] == " " )
                     {
-                        return col;                  
+                        return col;
                     }
                 }
-                
-                //Check horizontal, one empty between 4 R (RR_R or R_RR) 
-                if (col < 5  && f[row][col] == "R" && f[row][col+ 1] == "R")   
+
+                // Check horizontal, one empty between 4 R (RR_R or R_RR)
+                if ( col < 5 && f[row][col] == "R" && f[row][col + 1] == "R" )
                 {
-                    //(RR_R)
-                    if (col < 4 && row < 5 && f[row][col+ 2] == " " && f[row][col+3] != " " && f[row + 1][col+2] != " ") 
+                    // (RR_R)
+                    if ( col < 4 && row < 5 && f[row][col + 2] == " " && f[row][col + 3] != " "
+                        && f[row + 1][col + 2] != " " )
                     {
-                        return col+ 2;
-                    }
-                    else if (col >= 2 && row < 5 && f[row][col -1] == " " && f[row][col -2] != " " && f[row + 1][col-1] != " ") 
-                    {//R_RR
-                        return col - 1;
-                    }
-                }  
-                //Check horizontal, 3 R continous(RRR_ or _RRR)
-                if (col < 5  && row < 5 && f[row][col] == "R" && f[row][col+ 1] == "R" && f[row][col+ 2] == "R")   
-                {
-                    if (col < 4 &&  f[row][col+ 3] == " " && f[row + 1][col+3] != " ") {
-                        return col+ 3;
-                    }
-                    else if (col >= 1 &&  f[row][col -1] == " " && f[row + 1][col-1] != " ") {
-                        return col -1;
-                    }
-                }    
-                
-                //check diagonal bottom up
-                if (col < 5 && row > 1 && f[row][col] == "R" && f[row-1][col + 1] == "R" && f[row-2][col + 2] == "R") {
-                    
-                    if (row > 3 && col < 4 && f[row -3 ][col + 3] == " " && f[row -2 ][col + 3] != " ") {
-                        System.out.println("col computer=" + col);
-                        return col + 3;
-                    }
-                    else if (col > 1 && row < 4 && f[row +1 ][col -1] == " " && f[row + 2 ][col - 1] != " ") {
-                        System.out.println("col computer=" + col);
                         return col + 2;
                     }
-                }                  
+                    else if ( col >= 2 && row < 5 && f[row][col - 1] == " "
+                        && f[row][col - 2] != " " && f[row + 1][col - 1] != " " )
+                    {// R_RR
+                        return col - 1;
+                    }
+                }
+                // Check horizontal, 3 R continous(RRR_ or _RRR)
+                if ( col < 5 && row < 5 && f[row][col] == "R" && f[row][col + 1] == "R"
+                    && f[row][col + 2] == "R" )
+                {
+                    if ( col < 4 && f[row][col + 3] == " " && f[row + 1][col + 3] != " " )
+                    {
+                        return col + 3;
+                    }
+                    else if ( col >= 1 && f[row][col - 1] == " " && f[row + 1][col - 1] != " " )
+                    {
+                        return col - 1;
+                    }
+                }
+
+                // check diagonal bottom up
+                if ( col < 5 && row > 1 && f[row][col] == "R" && f[row - 1][col + 1] == "R"
+                    && f[row - 2][col + 2] == "R" )
+                {
+
+                    if ( row > 3 && col < 4 && f[row - 3][col + 3] == " "
+                        && f[row - 2][col + 3] != " " )
+                    {
+                        System.out.println( "col computer=" + col );
+                        return col + 3;
+                    }
+                    else if ( col > 1 && row < 4 && f[row + 1][col - 1] == " "
+                        && f[row + 2][col - 1] != " " )
+                    {
+                        System.out.println( "col computer=" + col );
+                        return col + 2;
+                    }
+                }
             }
-        }        
-        return -1; //player chance to play
+        }
+        return -1; // player chance to play
     }
-    
-    
-    public int getComputerTurn(String[][] f)
+
+    /**
+     * 
+     * This method determines which column to play in. This is the order it checks and determines 
+     * where to play.
+     * 1. If there is a winning move for us, make it.
+     * 2. If there is a 3 in a row horizontally without gaps, play that.
+     * 3. If there is a 3 in a row vertically without gaps, play that.
+     * 4. If there is a 3 in a row diagonally without gaps, play that.
+     * 5. If there is a 3 in a row horizontally with gaps, play that.
+     * 6. If there is a 3 in a row vertically with gaps, play that.
+     * 7. If there is a 3 in a row diagonally with gaps, play that.
+     * 9. If there is a 2 in a row horizontally without gaps, play that.
+     * 10. If there is a 2 in a row vertically without gaps, play that.
+     * 11. If there is a 2 in a row diagonally without gaps, play that.
+     * 12. If there is a 2 in a row horizontally with gaps, play that.
+     * 13. If there is a 2 in a row vertically with gaps, play that.
+     * 14. If there is a 2 in a row diagonally with gaps, play that.
+     * 15. If the middle column is open, play that.(All non vertical four in a row plays need the 
+     * middle column)
+     * 16. Choose a random column to play in :(this is if nothing else works, no column is better 
+     * than another as not enough pieces are on the board yet).
+     * 
+     * @param f the current state of the grid
+     * @return the column to play in.
+     */
+    public int getComputerTurn( String[][] f )
     {
-        int colCheck = checkIfComputerWins(f);
-        if (colCheck != -1) {
-            System.out.println("checkIfComputerWins col="  + colCheck);
+        int colCheck = checkIfComputerWins( f );
+        if ( colCheck != -1 )
+        {
+            System.out.println( "checkIfComputerWins col=" + colCheck );
             return colCheck;
         }
-        
-        for (int row =0; row<6; row++) 
+
+        for ( int row = 0; row < 6; row++ )
         {
-          for (int col =0; col<7; col++)
-          {
-              //Check horizontal RRR
-              if (col < 5  && f[row][col] == "R" && f[row][col+ 1] == "R" && f[row][col+ 2] == "R")   
-              {
-                  //RRR_
-                  if (col < 4 &&  f[row][col+ 3] == " "  && (row == 5 || row <= 5 && f[row + 1][col+3] != " ")) {
-                      return col+ 3;
-                  } //_RRR
-                  else if (col >= 1 &&  f[row][col -1] == " " && (row == 5 || row < 5 && f[row + 1][col-1] != " ")) {
-                      return col -1;
-                  }                  
-              } else if (col < 6  && f[row][col] == "R" && f[row][col+ 1] == "R") {
-                  //RR_R
-                  if (col < 4 && f[row][col+ 2] == " "  &&  (row == 5 || row < 5 && f[row + 1][col+2] != " ") 
-                          && f[row][col+ 3] == "R") {
-                      return col+ 2;
-                  } //R_RR
-                  else if (col >= 2 &&  f[row][col -1] == " " && (row == 5 || row < 5 && f[row + 1][col-1] != " ")
-                          && f[row][col- 2] == "R") {
-                      return col -1;
-                  }                                    
-              }
-              //diagonal RRR_
-              if (col < 3 && row > 2 && 
-                      f[row][col] == "R" && f[row-1][col + 1] == "R" && f[row -2][col + 2] == "R" 
-                          && f[row-3][col + 3] == " " && f[row-2][col + 3] != " ") {
-                  return col + 3;
-              } //diagonal RR_R 
-              else if (col < 3 && row > 2 && 
-                          f[row][col] == "R" && f[row-1][col + 1] == "R" && f[row -2][col + 2] == " " 
-                              && f[row-3][col + 3] == "R" && f[row-1][col + 2] != " ") {
-                      return col + 2;
-              } //diagonal R_RR 
-              else if (col < 3 && row > 2 && 
-                      f[row][col] == "R" && f[row-1][col + 1] == " " && f[row -2][col + 2] == "R" 
-                          && f[row-3][col + 3] == "R" && f[row][col + 1] != " ") {
-                  return col + 1;
-              }  //diagonal _RRR 
-              else if (col < 3 && row > 2 && 
-                      f[row][col] == " " && f[row-1][col + 1] == "R" && f[row -2][col + 2] == "R" 
-                          && f[row-3][col + 3] == "R") {
-                  return col;
-              }
-    
-              //Check vertical RRR_
-              if (row > 1 && f[row][col] == "R" && f[row-1][col] == "R" && f[row-2][col] == "R") {
-                  if (row > 2 && f[row-3][col] == " ") {
-                      return col;                  
-                  }
-              //    System.out.println("No vertical");
-              }
-
-              //Check horizontal YYY
-              if (col < 5  && f[row][col] == "Y" && f[row][col+ 1] == "Y" && f[row][col+ 2] == "Y")   
-              {
-                  //YYY_
-                  if (col < 4 &&  f[row][col+ 3] == " "  && (row == 5 || row < 5 && f[row + 1][col+3] != " ")) {
-                      return col+ 3;
-                  } //_YYY
-                  else if (col >= 1 &&  f[row][col -1] == " " && (row == 5 || row < 5 && f[row + 1][col-1] != " ")) {
-                      return col -1;
-                  }                  
-              }
-              //Check vertical YYY_
-              if (row > 1 && f[row][col] == "Y" && f[row-1][col] == "Y" && f[row-2][col] == "Y") {
-                  if (row > 2 && f[row-3][col] == " ") {
-                      return col;                  
-                  }
-              //    System.out.println("No vertical");
-              }
-              
-              //diagonal YYY_
-              if (col < 3 && row > 2 && 
-                      f[row][col] == "Y" && f[row-1][col + 1] == "Y" && f[row -2][col + 2] == "Y" 
-                          && f[row-3][col + 3] == " " && f[row-2][col + 3] != " ") {
-                  return col + 3;
-              } //diagonal YY_Y 
-              else if (col < 3 && row > 2 && 
-                          f[row][col] == "Y" && f[row-1][col + 1] == "Y" && f[row -2][col + 2] == " " 
-                              && f[row-3][col + 3] == "Y" && f[row-1][col + 2] != " ") {
-                      return col + 2;
-              } //diagonal Y_YY 
-              else if (col < 3 && row > 2 && 
-                      f[row][col] == "Y" && f[row-1][col + 1] == " " && f[row -2][col + 2] == "Y" 
-                          && f[row-3][col + 3] == "Y" && f[row][col + 1] != " ") {
-                  return col + 1;
-              }  //diagonal _YYY 
-              else if (col < 3 && row > 2 && 
-                      f[row][col] == " " && f[row-1][col + 1] == "Y" && f[row -2][col + 2] == "Y" 
-                          && f[row-3][col + 3] == "Y") {
-                  return col;
-              }
-
-              //Check horizontal YY
-              if (col < 6  && f[row][col] == "Y" && f[row][col+ 1] == "Y")   
-              {    
-                  //System.out.println("horizontal row=" + row + " col=" + col);
-                  //YY_ horizontal
-                  if (col < 5 &&  f[row][col+ 2] == " "  && (row == 5 || row < 5 && f[row + 1][col+2] != " ")) {
-                      //Y_YY_
-                      if (col >= 2 &&  f[row][col -1] == " " && f[row][col -2] == "Y" &&  
-                              (row == 5 || row < 5 && f[row + 1][col-1] != " ")) {
-                          return col -1;
-                      }
-                      return col+ 2;
-                  } //_YY horizontal
-                  else if (col >= 1 &&  f[row][col -1] == " " && (row == 5 || row < 5 && f[row + 1][col-1] != " ")) {
-                      return col -1;
-                  }
-              //    System.out.println("No horizontol");
-              } 
-              //vertical YY_
-              if (row > 0 && f[row][col] == "Y" && f[row-1][col] == "Y") {
-                  if (row > 1 && f[row-2][col] == " " || row < 5 && f[row+1][col] == " ") {
-                      return col;                  
-                  }
-              //    System.out.println("No vertical");
-              }
-              
-            }
-        }
-        //Now check for diagonal YY_(left to right upward)
-        for (int row =0; row<6; row++) {
-            for (int col =0; col<7; col++) {
-                if (col < 5 && row > 0 && 
-                        f[row][col] == "Y" && f[row-1][col + 1] == "Y" && f[row-1][col + 2] != " ") {
-                    //System.out.println("col computer=" + col);
+            for ( int col = 0; col < 7; col++ )
+            {
+                // Check horizontal RRR
+                if ( col < 5 && f[row][col] == "R" && f[row][col + 1] == "R"
+                    && f[row][col + 2] == "R" )
+                {
+                    // RRR_
+                    if ( col < 4 && f[row][col + 3] == " "
+                        && ( row == 5 || row <= 5 && f[row + 1][col + 3] != " " ) )
+                    {
+                        return col + 3;
+                    } // _RRR
+                    else if ( col >= 1 && f[row][col - 1] == " "
+                        && ( row == 5 || row < 5 && f[row + 1][col - 1] != " " ) )
+                    {
+                        return col - 1;
+                    }
+                }
+                else if ( col < 6 && f[row][col] == "R" && f[row][col + 1] == "R" )
+                {
+                    // RR_R
+                    if ( col < 4 && f[row][col + 2] == " "
+                        && ( row == 5 || row < 5 && f[row + 1][col + 2] != " " )
+                        && f[row][col + 3] == "R" )
+                    {
+                        return col + 2;
+                    } // R_RR
+                    else if ( col >= 2 && f[row][col - 1] == " "
+                        && ( row == 5 || row < 5 && f[row + 1][col - 1] != " " )
+                        && f[row][col - 2] == "R" )
+                    {
+                        return col - 1;
+                    }
+                }
+                // diagonal RRR_
+                if ( col < 3 && row > 2 && f[row][col] == "R" && f[row - 1][col + 1] == "R"
+                    && f[row - 2][col + 2] == "R" && f[row - 3][col + 3] == " "
+                    && f[row - 2][col + 3] != " " )
+                {
+                    return col + 3;
+                } // diagonal RR_R
+                else if ( col < 3 && row > 2 && f[row][col] == "R" && f[row - 1][col + 1] == "R"
+                    && f[row - 2][col + 2] == " " && f[row - 3][col + 3] == "R"
+                    && f[row - 1][col + 2] != " " )
+                {
                     return col + 2;
-                }                  
+                } // diagonal R_RR
+                else if ( col < 3 && row > 2 && f[row][col] == "R" && f[row - 1][col + 1] == " "
+                    && f[row - 2][col + 2] == "R" && f[row - 3][col + 3] == "R"
+                    && f[row][col + 1] != " " )
+                {
+                    return col + 1;
+                } // diagonal _RRR
+                else if ( col < 3 && row > 2 && f[row][col] == " " && f[row - 1][col + 1] == "R"
+                    && f[row - 2][col + 2] == "R" && f[row - 3][col + 3] == "R" )
+                {
+                    return col;
+                }
+
+                // Check vertical RRR_
+                if ( row > 1 && f[row][col] == "R" && f[row - 1][col] == "R"
+                    && f[row - 2][col] == "R" )
+                {
+                    if ( row > 2 && f[row - 3][col] == " " )
+                    {
+                        return col;
+                    }
+                    // System.out.println("No vertical");
+                }
+
+                // Check horizontal YYY
+                if ( col < 5 && f[row][col] == "Y" && f[row][col + 1] == "Y"
+                    && f[row][col + 2] == "Y" )
+                {
+                    // YYY_
+                    if ( col < 4 && f[row][col + 3] == " "
+                        && ( row == 5 || row < 5 && f[row + 1][col + 3] != " " ) )
+                    {
+                        return col + 3;
+                    } // _YYY
+                    else if ( col >= 1 && f[row][col - 1] == " "
+                        && ( row == 5 || row < 5 && f[row + 1][col - 1] != " " ) )
+                    {
+                        return col - 1;
+                    }
+                }
+                // Check vertical YYY_
+                if ( row > 1 && f[row][col] == "Y" && f[row - 1][col] == "Y"
+                    && f[row - 2][col] == "Y" )
+                {
+                    if ( row > 2 && f[row - 3][col] == " " )
+                    {
+                        return col;
+                    }
+                    // System.out.println("No vertical");
+                }
+
+                // diagonal YYY_
+                if ( col < 3 && row > 2 && f[row][col] == "Y" && f[row - 1][col + 1] == "Y"
+                    && f[row - 2][col + 2] == "Y" && f[row - 3][col + 3] == " "
+                    && f[row - 2][col + 3] != " " )
+                {
+                    return col + 3;
+                } // diagonal YY_Y
+                else if ( col < 3 && row > 2 && f[row][col] == "Y" && f[row - 1][col + 1] == "Y"
+                    && f[row - 2][col + 2] == " " && f[row - 3][col + 3] == "Y"
+                    && f[row - 1][col + 2] != " " )
+                {
+                    return col + 2;
+                } // diagonal Y_YY
+                else if ( col < 3 && row > 2 && f[row][col] == "Y" && f[row - 1][col + 1] == " "
+                    && f[row - 2][col + 2] == "Y" && f[row - 3][col + 3] == "Y"
+                    && f[row][col + 1] != " " )
+                {
+                    return col + 1;
+                } // diagonal _YYY
+                else if ( col < 3 && row > 2 && f[row][col] == " " && f[row - 1][col + 1] == "Y"
+                    && f[row - 2][col + 2] == "Y" && f[row - 3][col + 3] == "Y" )
+                {
+                    return col;
+                }
+
+                // Check horizontal YY
+                if ( col < 6 && f[row][col] == "Y" && f[row][col + 1] == "Y" )
+                {
+                    // System.out.println("horizontal row=" + row + " col=" +
+                    // col);
+                    // YY_ horizontal
+                    if ( col < 5 && f[row][col + 2] == " "
+                        && ( row == 5 || row < 5 && f[row + 1][col + 2] != " " ) )
+                    {
+                        // Y_YY_
+                        if ( col >= 2 && f[row][col - 1] == " " && f[row][col - 2] == "Y"
+                            && ( row == 5 || row < 5 && f[row + 1][col - 1] != " " ) )
+                        {
+                            return col - 1;
+                        }
+                        return col + 2;
+                    } // _YY horizontal
+                    else if ( col >= 1 && f[row][col - 1] == " "
+                        && ( row == 5 || row < 5 && f[row + 1][col - 1] != " " ) )
+                    {
+                        return col - 1;
+                    }
+                    // System.out.println("No horizontol");
+                }
+                // vertical YY_
+                if ( row > 0 && f[row][col] == "Y" && f[row - 1][col] == "Y" )
+                {
+                    if ( row > 1 && f[row - 2][col] == " " || row < 5 && f[row + 1][col] == " " )
+                    {
+                        return col;
+                    }
+                    // System.out.println("No vertical");
+                }
+
+            }
+        }
+        // Now check for diagonal YY_(left to right upward)
+        for ( int row = 0; row < 6; row++ )
+        {
+            for ( int col = 0; col < 7; col++ )
+            {
+                if ( col < 5 && row > 0 && f[row][col] == "Y" && f[row - 1][col + 1] == "Y"
+                    && f[row - 1][col + 2] != " " )
+                {
+                    // System.out.println("col computer=" + col);
+                    return col + 2;
+                }
             }
         }
 
-        int scan = (int) (Math.random() * 7);
-        return scan;
-    }
-    
-    public void dropRedPattern(String[][] f)
-    {
-      int changeToOdd = getComputerTurn(f);
-           
-      for (int row =5; row>=0; row--)
-     {
-       if (f[row][changeToOdd] == " " || f[row][changeToOdd] == "|")
-
-       {
-         f[row][changeToOdd] = "R";
-
-          break;
-
+        if ( f[4][3] == " " )// makes sure the first move is always is the
+                             // middle column if given
+                             // option
+        {
+            return 3;
         }
-      }
+        else
+        {
+            return (int)( Math.random() * 7 );
+        }
+
     }
-        
+
+
+    /**
+     * 
+     * This method drops the Red checker in the right column at the bottommost
+     * possible movespace in the grid. The column that it plays in is from
+     * getComputerTurn.
+     * 
+     * @param f
+     *            the updated grid.
+     */
+    public void dropRedPattern( String[][] f )
+    {
+        int changeToOdd = getComputerTurn( f );
+
+        for ( int row = 5; row >= 0; row-- )
+        {
+            if ( f[row][changeToOdd] == " " || f[row][changeToOdd] == "|" )
+
+            {
+                f[row][changeToOdd] = "R";
+
+                break;
+
+            }
+        }
+    }
+
 }
