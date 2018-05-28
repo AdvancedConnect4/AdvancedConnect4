@@ -1,13 +1,8 @@
 package connect4;
 
-import java.util.Scanner;
-
 public class ComputerPlayer 
-{
-    public static int computerCoins = 100;
-
-    
-    public static int checkIfComputerWins(String[][] f) 
+{   
+    public int checkIfComputerWins(String[][] f) 
     {
         for (int row =0; row<6; row++) 
         {
@@ -64,7 +59,7 @@ public class ComputerPlayer
     }
     
     
-    public static int getComputerTurn(String[][] f)
+    public int getComputerTurn(String[][] f)
     {
         int colCheck = checkIfComputerWins(f);
         if (colCheck != -1) {
@@ -211,17 +206,10 @@ public class ComputerPlayer
         return scan;
     }
     
-    public static void dropRedPattern(String[][] f)
-
+    public void dropRedPattern(String[][] f)
     {
-      //System.out.println("Drop a red disk at column (0–6): ");
-      //Scanner scan = new Scanner (System.in);
-
       int changeToOdd = getComputerTurn(f);
-      
-      //System.out.println("computer=" + changeToOdd);
-    //  int changeToOdd = 2*scan +1;
-     
+           
       for (int row =5; row>=0; row--)
      {
        if (f[row][changeToOdd] == " " || f[row][changeToOdd] == "|")
@@ -232,17 +220,7 @@ public class ComputerPlayer
           break;
 
         }
-
-
       }
-      
-      
-
     }
-    
-    public static int getRedCoins()
-    {
-        return computerCoins;
-    }
-    
+        
 }
