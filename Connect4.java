@@ -38,11 +38,12 @@ public class ConnectFour
             //int bid = getBid(count, playerBalance); 
            if (bettingHandler.bettingOver()) {
                System.out.println(bettingHandler.gameOverMessage());
+               bettingHandler.displayAllBets();
                loop = false;
                break;
            }
                
-           if (winner == "R" || winner == "Y") {
+           if (winner == "R" || winner == "Y" || winner == "T") {
                playerYellowturn = bettingHandler.startBetting();
                grid = logic.makeGrid();
            }
@@ -60,7 +61,7 @@ public class ConnectFour
            logic.printPatternWithGrid(grid);
            winner = logic.checkWinner(grid);
            if (winner == "R" || winner == "Y") {
-               bettingHandler.handleWinner(winner == "Y");
+               bettingHandler.handleWinner(winner);
                if (winner == "R")  {            
                      System.out.println("The red player won.");
                }
