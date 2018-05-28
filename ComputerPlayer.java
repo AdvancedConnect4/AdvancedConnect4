@@ -6,17 +6,7 @@ public class ComputerPlayer
 {
     public static int computerCoins = 100;
 
-    public static int getComputerBid()
-    {
-        int bid = (int)(computerCoins/8 + (int)(Math.random() * ((computerCoins/6 - computerCoins/8) + 1)));
-        if (bid > computerCoins)
-        {
-            return 0;
-        }
-        computerCoins -= bid;
-        return 16;
-    }
-
+    
     public static int checkIfComputerWins(String[][] f) 
     {
         for (int row =0; row<6; row++) 
@@ -245,12 +235,14 @@ public class ComputerPlayer
 
 
       }
+      
+      
 
     }
     
-
     public static int getRedCoins()
     {
         return computerCoins;
     }
+    
 }
