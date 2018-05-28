@@ -16,17 +16,11 @@ package connect4;
 public class ConnectFour
 {
     static Logic logic = new Logic();
-
     static BettingHandler bettingHandler = new BettingHandler();
-
     static ComputerPlayer computerPlayer = new ComputerPlayer();
-
     public static String[][] grid = logic.makeGrid();
-
-    public static boolean playerRedturn = false;
-
+    public static boolean playerRedturn = false;    
     public static boolean playerYellowturn = false;
-
 
     /**
      * 
