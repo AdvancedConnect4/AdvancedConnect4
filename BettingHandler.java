@@ -1,5 +1,7 @@
 package connect4;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class BettingHandler {
@@ -11,7 +13,8 @@ public class BettingHandler {
     private int playerBet;
     private int computerBet;
     private int gamesPlayed;
-    boolean gameOver;
+    Queue<String> betsQueue;
+
 
     public BettingHandler () {
         playerRemainingCoins = INITIAL_PLAYER_COINS;
@@ -19,7 +22,7 @@ public class BettingHandler {
         playerBet = 0;
         computerBet = 0;
         gamesPlayed = 0;
-        gameOver = false;
+        betsQueue = new LinkedList<>();
     }
     
     private int randomWithRange(int min, int max)
@@ -30,8 +33,8 @@ public class BettingHandler {
    
     public String gameOverMessage() {
         String msg = "Betting over! ";
-        if (gamesPlayed >= MAX_ALLOWED_GAMES)
-            msg = "maximum allowed games : " + MAX_ALLOWED_GAMES + " already played ";
+        if (gamesPlayed > MAX_ALLOWED_GAMES)
+            msg = "maximum allowed games : " + gamesPlayed + " already played ";
         if (playerRemainingCoins <=0 )
             msg += "player ran out of money ";
         if (computerRemainingCoins <=0 )
@@ -40,11 +43,9 @@ public class BettingHandler {
     }
     
     public boolean bettingOver() {
-        if (gameOver)
+        if (gamesPlayed > MAX_ALLOWED_GAMES || playerRemainingCoins <= 0 || computerRemainingCoins <= 0)
             return true;
-        if (gamesPlayed <= MAX_ALLOWED_GAMES && playerRemainingCoins > 0 && computerRemainingCoins > 0)
-            return false;
-        return true;
+        return false;
     }
     
     //return true if player bet is >= computerBet
@@ -72,14 +73,24 @@ public class BettingHandler {
       return playerFirst;
     }
     
-    public void handleWinner(boolean isPlayerWinner) {
-        if (isPlayerWinner) {
+    public void handleWinner(String winner) {
+        String currentBetData = String.format("Game[%d] Winner[%s] PlayerBet[%d] ComputerBet[%d] PlayerBalance[%d] ComputerBalance[%d]",
+                gamesPlayed, winner, playerBet, computerBet, playerRemainingCoins, computerRemainingCoins);
+        
+        betsQueue.add(currentBetData);
+        if (winner == "Y") {
             playerRemainingCoins += computerBet;
             computerRemainingCoins -= computerBet;
         } else {
             playerRemainingCoins -= playerBet;
             computerRemainingCoins += playerBet;            
         }                    
+    }
+    
+    public void displayAllBets() {                
+        for (String betData : betsQueue) {
+            System.out.println(betData);
+        }        
     }
 
 }
