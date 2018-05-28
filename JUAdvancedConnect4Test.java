@@ -184,4 +184,26 @@ public class JUAdvancedConnect4Test {
         String winner = logic.checkWinner(grid);
         assertEquals("Diagonal RRRR must win", "R", winner);
     }
+    
+    @Test 
+    public void checkBettingIsOver()
+    {
+        BettingHandler bettingHandler = new BettingHandler();
+        bettingHandler.startBetting(20);
+        bettingHandler.handleWinner("Y");
+        boolean betOver = bettingHandler.bettingOver();
+        assertEquals(false, betOver);
+        //second
+        bettingHandler.startBetting(20);
+        bettingHandler.handleWinner("Y");
+        betOver = bettingHandler.bettingOver();
+        assertEquals(false, betOver);
+        //third
+        bettingHandler.startBetting(20);
+        bettingHandler.handleWinner("Y");
+        betOver = bettingHandler.bettingOver();
+        assertEquals(true, betOver);
+    }
+    
+    
 }
