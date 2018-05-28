@@ -1,17 +1,11 @@
 package connect4;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Scanner;
-
 
 public class Logic
 
-{
-  public static int humanCoins = 100;
-    
-  public static String[][] makeGrid()
+{    
+  public String[][] makeGrid()
   {
     String[][] grid = new String[6][7];
     
@@ -19,7 +13,7 @@ public class Logic
     {
         for (int col =0; col <grid[row].length; col++)
         {
-            if (row==6)
+            if (row == 6)
                 grid[row][col]= "-";
             else
                 grid[row][col] = " ";
@@ -28,7 +22,7 @@ public class Logic
     return grid;
   }
 
-  public static void printPatternWithGrid(String[][] grid)
+  public void printPatternWithGrid(String[][] grid)
   {
       String[][] gridArray = new String[6][15];
 
@@ -43,9 +37,7 @@ public class Logic
                 gridArray[row][col] =  grid[row][col/2];
           //System.out.print(grid[row][col]);
         }
-
         //System.out.println();
-
       }
       
     for (int row =0; row < gridArray.length; row++)
@@ -62,7 +54,7 @@ public class Logic
 
   }
   
-  public static void printPatternWithoutGrid(String[][] grid)
+  public void printPatternWithoutGrid(String[][] grid)
   {
     for (int row =0; row < grid.length; row++)
     {
@@ -70,16 +62,11 @@ public class Logic
       {
         System.out.print(grid[row][col]);
       }
-
       System.out.println();
-
     }
-
   }
 
-  
-  
-  public static void dropYellowPattern(String[][] grid)
+  public void dropYellowPattern(String[][] grid)
   {
       Scanner scan = new Scanner(System.in);
       int number;
@@ -93,35 +80,36 @@ public class Logic
     } while (number < 0 || number > 6);
     System.out.println("Thank you! dropping Yellow at : " + number);
       
-    int changeToOdd = number;//2*number+1;
+    int col = number;//2*number+1;
     for (int row  =5; row>=0; row--)
     {
-        if (grid[row][changeToOdd] == " " || grid[row][changeToOdd] == "|")
+        if (grid[row][col] == " " || grid[row][col] == "|")
         {
-            grid[row][changeToOdd] = "Y";
+            grid[row][col] = "Y";
             break;
         }
     }
+    //scan.close();
   }
   
-  public static void dropYellowPatternGUI( String[][] grid, int number )
+  public void dropYellowPatternGUI( String[][] grid, int number )
   {
       while ( number < 0 || number > 6 );
       System.out.println( "Thank you! dropping Yellow at : " + number );
 
-      int changeToOdd = number;// 2*number+1;
+      int col = number;// 2*number+1;
       for ( int row = 5; row >= 0; row-- )
       {
-          if ( grid[row][changeToOdd] == " " || grid[row][changeToOdd] == "|" )
+          if ( grid[row][col] == " " || grid[row][col] == "|" )
           {
-              grid[row][changeToOdd] = "Y";
+              grid[row][col] = "Y";
               break;
           }
       }
   }
 
   
-  public static String checkWinner(String[][] f)
+  public String checkWinner(String[][] f)
 
   {
       //checks horizontal
@@ -164,7 +152,6 @@ public class Logic
             {
               return f[row][col]; 
             }
-
       } 
 
     } 
@@ -187,15 +174,14 @@ public class Logic
     return "N"; //none
   }
   
-  private static boolean tie(String[][] grid) {      
+  private boolean tie(String[][] grid) {      
       for (int row =0; row < grid.length; row++)
       {
         for (int col=0; col< grid[row].length; col++)
         {
             if (grid[row][col] == " ")
                 return false;
-        }
-        
+        }        
       }
       return true;
   }
