@@ -1,33 +1,15 @@
 package connect4;
 
-import java.util.Scanner;
-
 public class ConnectFour 
 {
-    public static int yellow = 0;
-
-    public static int red = 1;
-
-    public static int tie = 2;
-
-    public static int yellowCoins = 100;
-
-    public static int redCoins = 100;
-
     static Logic logic = new Logic();
     static BettingHandler bettingHandler = new BettingHandler();
-
     static ComputerPlayer computerPlayer = new ComputerPlayer();
-
     public static String[][] grid = logic.makeGrid();
-
-    public static boolean playerRedturn = false;
-    
+    public static boolean playerRedturn = false;    
     public static boolean playerYellowturn = false;
-
-
+    
     public static void main (String[] args)
-
     {
         String[][] grid = logic.makeGrid();
         boolean loop = true;
@@ -67,7 +49,9 @@ public class ConnectFour
                }
                else if (winner== "Y") {            
                     System.out.println("The yellow player won.");
-               }
+               } else if (winner== "T") {            
+                   System.out.println("Tie");
+              }
            }
         }
 
