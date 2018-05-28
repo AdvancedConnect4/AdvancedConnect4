@@ -98,6 +98,10 @@ public class BettingHandler
         return false;
     }
 
+    public int getPlayerRemainingCoins() {
+        return playerRemainingCoins;
+    }
+    
 
     /**
      * 
@@ -108,31 +112,20 @@ public class BettingHandler
      */
     public boolean startBetting()
     {
-        gamesPlayed++;
-        Scanner scan = new Scanner( System.in );
-        do
-        {
-            System.out.print( "Start your bet [MIN: 0 MAX : " + playerRemainingCoins + "] : " );
-            while ( !scan.hasNextInt() )
-            {
-                System.out.println( "That's not a valid bet!" );
-                scan.next(); // this is important!
-            }
-            playerBet = scan.nextInt();
-        } while ( playerBet < 0 || playerBet > playerRemainingCoins );
-
-        computerBet = randomWithRange( 0, computerRemainingCoins );
-        boolean playerFirst = playerBet >= computerBet;
+        gamesPlayed++;       
+        playerBet = playerBetNumber;
+        computerBet = randomWithRange(0, computerRemainingCoins);  
+        boolean playerFirst = playerBet >=  computerBet;
         String msg = "";
-        if ( playerFirst )
+        if (playerFirst)
             msg = "Player";
-        else
+        else 
             msg = "Computer";
-        System.out.println( msg + " gets first turn for game " + gamesPlayed + " you are betting $"
-            + playerBet + " against computer bet $" + computerBet + "\n" );
-        // scan.close();
+        System.out.println(msg + " gets first turn for game " + gamesPlayed + " you are betting $" + playerBet + " against computer bet $" + computerBet + "\n");
         return playerFirst;
     }
+    
+    
 
     /**
      * 
@@ -143,26 +136,17 @@ public class BettingHandler
      */
     public void handleWinner( String winner )
     {
-        String currentBetData = String.format(
-            "Game[%d] Winner[%s] PlayerBet[%d] ComputerBet[%d] PlayerBalance[%d] ComputerBalance[%d]",
-            gamesPlayed,
-            winner,
-            playerBet,
-            computerBet,
-            playerRemainingCoins,
-            computerRemainingCoins );
-
-        betsQueue.add( currentBetData );
-        if ( winner == "Y" )
-        {
+        String currentBetData = String.format("Game[%d] Winner[%s] PlayerBet[%d] ComputerBet[%d] PlayerBalance[%d] ComputerBalance[%d]",
+                gamesPlayed, winner, playerBet, computerBet, playerRemainingCoins, computerRemainingCoins);
+        
+        betsQueue.add(currentBetData);
+        if (winner == "Y") {
             playerRemainingCoins += computerBet;
             computerRemainingCoins -= computerBet;
-        }
-        else
-        {
+        } else {
             playerRemainingCoins -= playerBet;
-            computerRemainingCoins += playerBet;
-        }
+            computerRemainingCoins += playerBet;            
+        }            
     }
 
     /**
