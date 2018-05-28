@@ -15,6 +15,7 @@ public class ConnectFour
     public static int redCoins = 100;
 
     static Logic logic = new Logic();
+    static BettingHandler bettingHandler = new BettingHandler();
 
     static ComputerPlayer computerPlayer = new ComputerPlayer();
 
@@ -28,59 +29,46 @@ public class ConnectFour
     public static void main (String[] args)
 
     {
-        String[][] grid = Logic.makeGrid();
+        String[][] grid = logic.makeGrid();
         boolean loop = true;
-
-        Logic.printPatternWithoutGrid( grid );
-
-        while ( loop )
-        {
-            int computerBid = ComputerPlayer.getComputerBid();
-            int yellowBid = Logic.getYellowPlayerBid();
-            if ( yellowBid > computerBid )
-            {
-                playerYellowturn = true;
-                Logic.dropYellowPattern( grid );
-                System.out.println(
-                    "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
-                System.out.println(
-                    "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
-            }
-            if ( yellowBid < computerBid )
-            {
-                playerRedturn = true;
-                computerPlayer.dropRedPattern( grid );
-                System.out.println(
-                    "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
-                System.out.println(
-                    "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
-            }
-            if(yellowBid == computerBid)
-            {
-                System.out.println( "Tie bid, try again" );
-                System.out.println(
-                    "Yellow has " + Integer.valueOf( logic.getYellowCoins() ) + " coins left" );
-                System.out.println(
-                    "Red has " + Integer.valueOf( computerPlayer.getRedCoins() ) + " coins left" );
-            }
-            logic.printPatternWithGrid( grid );
-            if ( logic.checkWinner( grid ) != null )
-            {
-                if ( logic.checkWinner( grid ) == "R" )
-                {
-                    System.out.println( "The red player won." );
-                }
-                else if ( logic.checkWinner( grid ) == "Y" )
-                {
-                    System.out.println( "The yellow player won." );
-                }
-                loop = false;
-
-            }
-
+        logic.printPatternWithGrid(grid);
+        String winner = "R";
+        while(loop)
+        {            
+            //int bid = getBid(count, playerBalance); 
+           if (bettingHandler.bettingOver()) {
+               System.out.println(bettingHandler.gameOverMessage());
+               loop = false;
+               break;
+           }
+               
+           if (winner == "R" || winner == "Y") {
+               playerYellowturn = bettingHandler.startBetting();
+               grid = logic.makeGrid();
+           }
+           
+           if (playerYellowturn) { //player plays first 
+               logic.dropYellowPattern(grid);
+               playerYellowturn = false;
+               playerRedturn = true;
+           } else {
+               computerPlayer.dropRedPattern(grid);
+               playerYellowturn = true;
+               playerRedturn = false;
+           }
+           
+           logic.printPatternWithGrid(grid);
+           winner = logic.checkWinner(grid);
+           if (winner == "R" || winner == "Y") {
+               bettingHandler.handleWinner(winner == "Y");
+               if (winner == "R")  {            
+                     System.out.println("The red player won.");
+               }
+               else if (winner== "Y") {            
+                    System.out.println("The yellow player won.");
+               }
+           }
         }
 
-  }
-
-
+      }
 }
