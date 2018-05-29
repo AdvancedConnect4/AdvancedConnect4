@@ -1,11 +1,10 @@
-package connect4;
-
 /**
  * 
  *  This class decides where the computerPlayer should play.
  *  The methods below detail how the computer chooses.
  *
- *  @author  Albert Su
+ *  @author Albert Su
+ *  @author Anika Murthy
  *  @author Arnav Gupta
  *  @version May 28, 2018
  *  @author  Period: 2
@@ -15,6 +14,56 @@ package connect4;
  */
 public class ComputerPlayer
 {
+	private int computerMoveRow;
+	private int computerMoveCol;
+	
+	public ComputerPlayer()
+	{
+		// Initialize the row and column that computer will pick to -1 at the start of the game.
+		computerMoveRow = -1;
+		computerMoveCol = -1;
+	}
+	
+	/**
+     * 
+     * This method determines the next move for the computer to play. It uses the getComputerTurn
+     * to determine the column for the next move and picks the available [row, column] pair
+     * starting from the bottom-most row.
+     *  
+     * @param f the updated grid.
+     */
+    public void determineComputerMove( String[][] f )
+    {
+        int col = getComputerTurn( f );
+
+        for ( int row = 5; row >= 0; row-- )
+        {
+            if ( f[row][col] == " " )
+            {
+            	computerMoveRow = row;
+            	computerMoveCol = col;
+                break;
+
+            }
+        }
+    }
+    
+    /**
+     * Returns the row that has been picked by the computer.
+     */
+    public int getComputerMoveRow()
+    {
+    	return computerMoveRow;
+    }
+    
+    /**
+     * Returns the column that has been picked by the computer.
+     */
+    public int getComputerMoveColumn()
+    {
+    	return computerMoveCol;
+    }
+	
     /**
      * 
      * This method returns the move that the computer should play in in order to
@@ -30,7 +79,7 @@ public class ComputerPlayer
      * @return if there is a winning move, then it will return the column that
      *         the computer will play in, otherwise, it would return the -1.
      */
-    public int checkIfComputerWins( String[][] f )
+    private int checkIfComputerWins( String[][] f )
     {
         for ( int row = 0; row < 6; row++ )
         {
@@ -84,13 +133,11 @@ public class ComputerPlayer
                     if ( row > 3 && col < 4 && f[row - 3][col + 3] == " "
                         && f[row - 2][col + 3] != " " )
                     {
-                        System.out.println( "col computer=" + col );
                         return col + 3;
                     }
                     else if ( col > 1 && row < 4 && f[row + 1][col - 1] == " "
                         && f[row + 2][col - 1] != " " )
                     {
-                        System.out.println( "col computer=" + col );
                         return col + 2;
                     }
                 }
@@ -124,12 +171,11 @@ public class ComputerPlayer
      * @param f the current state of the grid
      * @return the column to play in.
      */
-    public int getComputerTurn( String[][] f )
+    private int getComputerTurn( String[][] f )
     {
         int colCheck = checkIfComputerWins( f );
         if ( colCheck != -1 )
         {
-            System.out.println( "checkIfComputerWins col=" + colCheck );
             return colCheck;
         }
 
@@ -202,7 +248,6 @@ public class ComputerPlayer
                     {
                         return col;
                     }
-                    // System.out.println("No vertical");
                 }
 
                 // Check horizontal YYY
@@ -229,7 +274,6 @@ public class ComputerPlayer
                     {
                         return col;
                     }
-                    // System.out.println("No vertical");
                 }
 
                 // diagonal YYY_
@@ -260,8 +304,6 @@ public class ComputerPlayer
                 // Check horizontal YY
                 if ( col < 6 && f[row][col] == "Y" && f[row][col + 1] == "Y" )
                 {
-                    // System.out.println("horizontal row=" + row + " col=" +
-                    // col);
                     // YY_ horizontal
                     if ( col < 5 && f[row][col + 2] == " "
                         && ( row == 5 || row < 5 && f[row + 1][col + 2] != " " ) )
@@ -279,7 +321,6 @@ public class ComputerPlayer
                     {
                         return col - 1;
                     }
-                    // System.out.println("No horizontol");
                 }
                 // vertical YY_
                 if ( row > 0 && f[row][col] == "Y" && f[row - 1][col] == "Y" )
@@ -288,7 +329,6 @@ public class ComputerPlayer
                     {
                         return col;
                     }
-                    // System.out.println("No vertical");
                 }
 
             }
@@ -301,7 +341,6 @@ public class ComputerPlayer
                 if ( col < 5 && row > 0 && f[row][col] == "Y" && f[row - 1][col + 1] == "Y"
                     && f[row - 1][col + 2] != " " )
                 {
-                    // System.out.println("col computer=" + col);
                     return col + 2;
                 }
             }
@@ -318,33 +357,6 @@ public class ComputerPlayer
             return (int)( Math.random() * 7 );
         }
 
-    }
-
-
-    /**
-     * 
-     * This method drops the Red checker in the right column at the bottommost
-     * possible movespace in the grid. The column that it plays in is from
-     * getComputerTurn.
-     * 
-     * @param f
-     *            the updated grid.
-     */
-    public void dropRedPattern( String[][] f )
-    {
-        int changeToOdd = getComputerTurn( f );
-
-        for ( int row = 5; row >= 0; row-- )
-        {
-            if ( f[row][changeToOdd] == " " || f[row][changeToOdd] == "|" )
-
-            {
-                f[row][changeToOdd] = "R";
-
-                break;
-
-            }
-        }
     }
 
 }
