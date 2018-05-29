@@ -1,0 +1,14 @@
+public class AdvancedConnect4 {
+
+    public static void main(String[] args) {
+
+        //Schedule a job for the event-dispatching thread:
+        // Display the Connect 4 GUI.
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+		Connect4Gui connect4Gui = new Connect4Gui(args);
+		connect4Gui.displayConnect4Gui();
+            }
+        });
+    }
+}
