@@ -1,5 +1,3 @@
-package connect4;
-
 import java.util.Scanner;
 
 /**
@@ -10,6 +8,7 @@ import java.util.Scanner;
  *  yellow player plays.
  *
  *  @author  Albert Su
+ *  @author  Anika Murthy
  *  @author  Arnav Gupta
  *  @version May 28, 2018
  *  @author  Period: 2
@@ -20,27 +19,35 @@ import java.util.Scanner;
 
 public class Logic
 {
-    /**
-     * 
-     * Makes the grid by changing some squares to make it look like a grid
-     * @return the grid[][]
-     */
-    public String[][] makeGrid()
-    {
-        String[][] grid = new String[6][7];
+	private String[][] grid;
+	private ComputerPlayer computerPlayer;
+	
+	/**
+	 * Constructs a new Logic with a 6x7 grid. The all squares in the grid, except for
+	 * the ones in the last row are initialized to "-" to indicate that they are unavailable. 
+	 * Squares in the last row are initialized to " " to indicate that they are available.
+	 */
+	public Logic()
+	{
+		computerPlayer = new ComputerPlayer();
+		grid = new String[6][7];
 
+		// Initialize the grid squares with default values.
         for ( int row = 0; row < grid.length; row++ )
         {
             for ( int col = 0; col < grid[row].length; col++ )
             {
-                if ( row == 6 )
-                    grid[row][col] = "-";
-                else
+                if ( row == 5 )
+                {
                     grid[row][col] = " ";
+                }
+                else
+                {
+                    grid[row][col] = "-";
+                }
             }
         }
-        return grid;
-    }
+	}
 
     /**
      * 
@@ -62,9 +69,7 @@ public class Logic
                     gridArray[row][col] = "|";
                 else
                     gridArray[row][col] = grid[row][col / 2];
-                // System.out.print(grid[row][col]);
             }
-            // System.out.println();
         }
 
         for ( int row = 0; row < gridArray.length; row++ )
@@ -110,7 +115,7 @@ public class Logic
      * 
      * @param grid Updated grid
      */
-    public void dropYellowPattern( String[][] grid )
+    public void dropYellowPatternTest( String[][] grid )
     {
         Scanner scan = new Scanner( System.in );
         int number;
@@ -126,7 +131,7 @@ public class Logic
         } while ( number < 0 || number > 6 );
         System.out.println( "Thank you! dropping Yellow at : " + number );
 
-        int col = number;// 2*number+1;
+        int col = number;
         for ( int row = 5; row >= 0; row-- )
         {
             if ( grid[row][col] == " " || grid[row][col] == "|" )
@@ -135,60 +140,111 @@ public class Logic
                 break;
             }
         }
-        // scan.close();
     }
 
     /**
      * 
-     * This is the method for the GUI. When the player plays at a certain square, this method drops
-     * the checker at the bottom-most square of that column. 
+     * This method is called by the GUI. When the player plays at a certain square, this method drops
+     * the checker at square that matches the supplied row and col.
      * 
-     * @param grid the updated grid
-     * @param number the column that the user wants to play at. 
+     * @param row the row of the square picked by the player.
+     * @param col the column of the square picked by the player. 
      */
-    public void dropYellowPatternGUI( String[][] grid, int number )
+    public void dropYellowPattern( int row, int col )
     {
-        while ( number < 0 || number > 6 );
-        System.out.println( "Thank you! dropping Yellow at : " + number );
-
-        int col = number;// 2*number+1;
-        for ( int row = 5; row >= 0; row-- )
-        {
-            if ( grid[row][col] == " " || grid[row][col] == "|" )
-            {
-                grid[row][col] = "Y";
-                break;
-            }
-        }
+        grid[row][col] = "Y";
     }
-
+    
     /**
      * 
-     * Checks if there is a winner as a result of that move. It first checks if there is a 4 in a 
-     * row horizontally, then vertically, then diagonal left to right the right to left. All of 
-     * these methods use for loops to check if there is a 4 in a row starting from each square that
-     * is possible(ie when checking horizontal, the last column that it checks at is 4 because 
-     * there would be an out-of-bounds error as it would be at most a 3 in a row)
-     * 
-     * @param f the grid.
-     * @return if there is a winner it returns the string of the color of the token on the last 
-     * square of the 4 in a row. If there isn't a winner, it returns -1.
+     * This method determines the next possible move for the red player (aka computer player)
+     * by calling the ComputerPlayer class. It updates the grid with setting the selected 
+     * [row, col] pair to "R" to indicate that the square has been taken by the red player.
+     *
      */
-    public String checkWinner( String[][] f )
+    public void dropRedPattern()
+    {
+    	computerPlayer.determineComputerMove(grid);
+    	int row = computerPlayer.getComputerMoveRow();
+        int col = computerPlayer.getComputerMoveColumn();
+        grid[row][col] = "R";
+    }
+    
+    /**
+     * Returns the row that has been picked by the red player (aka computer).
+     */
+    public int getRedPlayerRow()
+    {
+    	return computerPlayer.getComputerMoveRow();
+    }
+    
+    /**
+     * Returns the column that has been picked by the red player (aka computer).
+     */
+    public int getRedPlayerColumn()
+    {
+    	return computerPlayer.getComputerMoveColumn();
+    }
+    
+    /**
+     * The GUI calls this method to update a square that is directly above the square picked by
+     * the player on the GUI grid. This method updates the square to " " to indicate that the
+     * square is available for the players to pick.
+     *
+     * @param row the row of the square that became available.
+     * @param col the column of the square that became available.
+     */
+    public void makeSquareAvailable(int row, int col)
+    {
+    	grid[row][col] = " ";
+    }
+    
+    /**
+     * Checks if red player is the winner. Calls checkWinner for handling this.
+     * 
+     * @return true if red player is the winner, false otherwise.
+     */
+    public boolean checkRedPlayerWins()
+    {
+    	return checkWinner("R");
+    }
+    
+    /**
+     * Checks if yellow player is the winner. Calls checkWinner for handling this.
+     * 
+     * @return true if yellow player is the winner, false otherwise.
+     */
+    public boolean checkYellowPlayerWins()
+    {
+    	return checkWinner("Y");
+    }
 
+	/**
+	 * 
+	 * Checks if there is a winner as a result of that move. It first checks if
+	 * there is a 4 in a row horizontally, then vertically, then diagonal left to
+	 * right the right to left. All of these methods use for loops to check if there
+	 * is a 4 in a row starting from each square that is possible(ie when checking
+	 * horizontal, the last column that it checks at is 4 because there would be an
+	 * out-of-bounds error as it would be at most a 3 in a row)
+	 * 
+	 * @param player The player that needs to be checked, "R" for red and "Y" for yellow.
+	 * @return true if player gets four connecting squares horizontally, vertically
+	 *         or diagonally. False otherwise.
+	 */
+    public boolean checkWinner(String player)
     {
         // checks horizontal
         for ( int row = 0; row < 6; row++ )
         {
             for ( int col = 0; col < 4; col++ )
             {
-                if ( ( f[row][col] != " " ) && ( f[row][col + 1] != " " )
-                    && ( f[row][col + 2] != " " ) && ( f[row][col + 3] != " " )
-                    && ( ( f[row][col] == f[row][col + 1] )
-                        && ( f[row][col + 1] == f[row][col + 2] )
-                        && ( f[row][col + 2] == f[row][col + 3] ) ) )
+                if (grid[row][col].equals(player) 
+                	&& grid[row][col + 1].equals(player)
+                    && grid[row][col + 2].equals(player)  
+                    && grid[row][col + 3].equals(player))
                 {
-                    return f[row][col];
+                    return true;
                 }
             }
         }
@@ -198,14 +254,13 @@ public class Logic
         {
             for ( int row = 0; row < 3; row++ )
             {
-                if ( ( f[row][col] != " " ) && ( f[row + 1][col] != " " )
-                    && ( f[row + 2][col] != " " ) && ( f[row + 3][col] != " " )
-                    && ( ( f[row][col] == f[row + 1][col] )
-                        && ( f[row + 1][col] == f[row + 2][col] )
-                        && ( f[row + 2][col] == f[row + 3][col] ) ) )
-                {
-                    return f[row][col];
-                }
+            	if (grid[row][col].equals(player) 
+                   	&& grid[row + 1][col].equals(player)
+                    && grid[row + 2][col].equals(player)  
+                    && grid[row + 3][col].equals(player))
+                   {
+                       return true;
+                   }
             }
         }
 
@@ -214,36 +269,35 @@ public class Logic
         {
             for ( int col = 0; col < 4; col++ )
             {
-                if ( ( f[row][col] != " " ) && ( f[row + 1][col + 1] != " " )
-                    && ( f[row + 2][col + 2] != " " ) && ( f[row + 3][col + 3] != " " )
-                    && ( ( f[row][col] == f[row + 1][col + 1] )
-                        && ( f[row + 1][col + 1] == f[row + 2][col + 2] )
-                        && ( f[row + 2][col + 2] == f[row + 3][col + 3] ) ) )
+                if (grid[row][col].equals(player)
+                    && grid[row + 1][col + 1].equals(player)
+                    && grid[row + 2][col + 2].equals(player)
+                    && grid[row + 3][col + 3].equals(player))
                 {
-                    return f[row][col];
+                    return true;
                 }
             }
 
         }
+        
         // checks right to left diagonal
         for ( int row = 0; row < 3; row++ )
         {
             for ( int col = 6; col > 2; col-- )
             {
-                if ( ( f[row][col] != " " ) && ( f[row + 1][col - 1] != " " )
-                    && ( f[row + 2][col - 2] != " " ) && ( f[row + 3][col - 3] != " " )
-                    && ( ( f[row][col] == f[row + 1][col - 1] )
-                        && ( f[row + 1][col - 1] == f[row + 2][col - 2] )
-                        && ( f[row + 2][col - 2] == f[row + 3][col - 3] ) ) )
-                {
-                    return f[row][col];
-                }
+            	if (grid[row][col].equals(player)
+            		&& grid[row + 1][col - 1].equals(player)
+            		&& grid[row + 2][col - 2].equals(player)
+            		&& grid[row + 3][col - 3].equals(player))
+            	{
+            		return true;
+            	}
             }
 
         }
-        if ( tie( f ) )
-            return "T";
-        return "N"; // none
+        
+        // Not a winner. Return false.
+        return false;
     }
 
 
@@ -252,17 +306,18 @@ public class Logic
      * There is a tie if the entire grid if filled up and there is no winner. This method makes 
      * sure that the game keeps going if there is no tie. It checks if there are any empty squares.
      * 
-     * @param grid This is the grid that is updated.
-     * @return If there is a tie, return true. If there is no tie, return false.
+     * @return If there is a tie, return true. Return false otherwise
      */
-    private boolean tie( String[][] grid )
+    public boolean tie()
     {
         for ( int row = 0; row < grid.length; row++ )
         {
             for ( int col = 0; col < grid[row].length; col++ )
             {
-                if ( grid[row][col] == " " )
+                if (grid[row][col].equals(" "))
+                {
                     return false;
+                }
             }
         }
         return true;
