@@ -150,14 +150,4 @@ public class JUAdvancedConnect4Test {
         boolean winner = logic.tie();
         assertTrue(winner);
     }
-    
-    @Test 
-    public void checkBettingOver()
-    {
-        BettingHandler bettingHandler = new BettingHandler();
-        bettingHandler.setBluePlayerBet(100);
-        bettingHandler.setBluePlayerBet(100);
-        boolean bettingOver = bettingHandler.bettingOver();
-        assertTrue(bettingOver);
-    }
 }
