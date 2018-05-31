@@ -1,19 +1,17 @@
-package connect4;
-
 import java.util.Scanner;
 
 public class InputHandler {
     public int getYellowLocation(Scanner scan) {
         int number;
         do {
-            System.out.print("Drop a yellow disk at column (0–6): ");
+            System.out.print("Drop a blue disk at column (0–6): ");
             while (!scan.hasNextInt()) {
                 System.out.println("That's not a number!");
                 scan.next(); // this is important!
             }
             number = scan.nextInt();
       } while (number < 0 || number > 6);
-      System.out.println("Thank you! dropping Yellow at : " + number);
+      System.out.println("Thank you! dropping Blue at : " + number);
       return number;      
     }
 
