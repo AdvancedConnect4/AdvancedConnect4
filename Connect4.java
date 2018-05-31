@@ -1,4 +1,4 @@
-package connect4;
+import java.util.Scanner;
 
 /**
  * 
@@ -13,14 +13,13 @@ package connect4;
  *
  * @author Sources: None
  */
-public class ConnectFour
+public class Connect4
 {
     static Logic logic = new Logic();
     static BettingHandler bettingHandler = new BettingHandler();
     static ComputerPlayer computerPlayer = new ComputerPlayer();
-    public static String[][] grid = logic.makeGrid();
-    public static boolean playerRedturn = false;    
-    public static boolean playerYellowturn = false;
+    public static boolean playerPinkTurn = false;    
+    public static boolean playerBlueTurn = false;
 
     /**
      * 
@@ -33,48 +32,40 @@ public class ConnectFour
     {
         Scanner scan = new Scanner(System.in);
         InputHandler inputHandler = new InputHandler();
-        String[][] grid = logic.makeGrid();
         boolean loop = true;
-        logic.printPatternWithGrid(grid);
-        String winner = "R";
+        logic.printPatternWithGrid();
+        String winner = "P";
         while(loop)
         {            
-            //int bid = getBid(count, playerBalance);                
-           if (winner == "R" || winner == "Y" || winner == "T") {
+           if (winner == "P" || winner == "B") {
                if (bettingHandler.bettingOver()) {
                    System.out.println(bettingHandler.gameOverMessage());
                    bettingHandler.displayAllBets();
                    loop = false;
                    break;
                }
-               int playerRemainingCoins = bettingHandler.getPlayerRemainingCoins();
-               int playerBet = inputHandler.getPlayerBet(scan, playerRemainingCoins);
-               playerYellowturn = bettingHandler.startBetting(playerBet);
-               grid = logic.makeGrid();
+               int playerRemainingCoins = bettingHandler.getBluePlayerCoins();
+               int bluePlayerBet = inputHandler.getPlayerBet(scan, playerRemainingCoins);
+               int pinkPlayerBet = bettingHandler.getPinkPlayerBet();
+               playerBlueTurn = bluePlayerBet > pinkPlayerBet;
            }
-           if (playerYellowturn) { //player plays first
+           if (playerBlueTurn) { //player plays first
                int yellowLocation = inputHandler.getYellowLocation(scan);
-               logic.dropYellowPattern(grid, yellowLocation);
-               playerYellowturn = false;
-               playerRedturn = true;
+               logic.dropBluePattern(yellowLocation, yellowLocation);
+               playerBlueTurn = false;
+               playerPinkTurn = true;
            } else {
-               computerPlayer.dropRedPattern(grid);
-               playerYellowturn = true;
-               playerRedturn = false;
+               logic.dropPinkPattern();
+               playerBlueTurn = true;
+               playerPinkTurn = false;
            }
            
-           logic.printPatternWithGrid(grid);
-           winner = logic.checkWinner(grid);
-           if (winner == "R" || winner == "Y") {
-               bettingHandler.handleWinner(winner);
-               if (winner == "R")  {            
-                     System.out.println("The red player won.");
-               }
-               else if (winner== "Y") {            
-                    System.out.println("The yellow player won.");
-               } else if (winner== "T") {            
-                   System.out.println("Tie");
-              }
+           logic.printPatternWithGrid();
+           if (logic.checkPinkPlayerWins()) {
+        	   System.out.println("The pink player won.");
+           }
+           else if (logic.checkBluePlayerWins()) {            
+        	   System.out.println("The blue player won.");
            }
         }
         scan.close();
