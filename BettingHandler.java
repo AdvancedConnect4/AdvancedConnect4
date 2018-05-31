@@ -30,8 +30,7 @@ public class BettingHandler
 
 	private int gamesPlayed;
 
-
-	Queue<String> betsList;
+	private Queue<String> betsList;
 
 	/**
 	 * Constructor for the class, initializes the values of the variables that keep track of 
