@@ -1,14 +1,24 @@
+/**
+ * The main class for the Advanced Connect $ game. This class starts the 
+ * GUI from where the human player and computer player start the game and
+ * play to completion.
+ * 
+ *  @author  Anika Murthy
+ *  @version May 28, 2018
+ *  @author  Period: 2
+ *  @author  Assignment: FinalProject
+ */
 public class AdvancedConnect4 {
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
 
-        //Schedule a job for the event-dispatching thread:
-        // Display the Connect 4 GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-		Connect4Gui connect4Gui = new Connect4Gui(args);
-		connect4Gui.displayConnect4Gui();
-            }
-        });
-    }
+		// Schedule a job for the event-dispatching thread:
+		// Display the Advanced Connect 4 GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				AdvancedConnect4Gui advancedConnect4Gui = new AdvancedConnect4Gui(args);
+				advancedConnect4Gui.displayAdvancedConnect4Gui();
+			}
+		});
+	}
 }
