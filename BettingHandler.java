@@ -1,5 +1,5 @@
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Queue;
 
 /**
  * 
@@ -31,7 +31,7 @@ public class BettingHandler
 	private int gamesPlayed;
 
 
-	List<String> betsList;
+	Queue<String> betsList;
 
 	/**
 	 * Constructor for the class, initializes the values of the variables that keep track of 
@@ -146,7 +146,8 @@ public class BettingHandler
 		}
 
 		String currentBetData = String.format(
-				"GAME: %d, WINNER: %s, BLUE PLAYER BET: %d, PINK PLAYER BET: %d, BLUE PLAYER REMAINING COINS: %d, PINK PLAYER REMAINING COINS: %d",
+				"GAME: %d, WINNER: %s, BLUE PLAYER BET: %d, PINK PLAYER BET: %d, "
+				+ "BLUE PLAYER REMAINING COINS: %d, PINK PLAYER REMAINING COINS: %d",
 				gamesPlayed,
 				winningPlayer,
 				bluePlayerBet,
